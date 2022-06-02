@@ -1,0 +1,1 @@
+- [] Ensure onTableChanged is registered on workbook open
