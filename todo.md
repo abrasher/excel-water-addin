@@ -1,4 +1,5 @@
 - [] Ensure onTableChanged is registered on workbook open
+  make disabled text in autocalculate darker
 
 Questions
 

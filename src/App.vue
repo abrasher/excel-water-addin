@@ -5,6 +5,7 @@
         <n-tabs justify-content="space-evenly">
           <n-tab-pane name="Methods"> <Methods> </Methods></n-tab-pane>
           <n-tab-pane name="Define"><Define></Define></n-tab-pane>
+          <n-tab-pane name="Export"><Export></Export></n-tab-pane>
         </n-tabs>
       </n-layout-content>
     </n-layout>
@@ -18,6 +19,7 @@ import Setup from "./components/Setup.vue"
 import { NSpace, NLayout, NTabs, NTabPane, NLayoutContent } from "naive-ui"
 import Methods from "./pages/Methods.vue"
 import Define from "./pages/Define.vue"
+import Export from "./pages/Export.vue"
 </script>
 
 <style scoped>
