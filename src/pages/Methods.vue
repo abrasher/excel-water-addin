@@ -34,12 +34,23 @@ const columnDefs: DataTableColumns<Catchment> = [
       }),
   },
   {
+    title: "SCS",
+    key: "scsEnabled",
+    render: (row) =>
+      h(NCheckbox, {
+        checked: row.scsEnabled,
+        onUpdateChecked: () => {
+          row.scsEnabled = !row.scsEnabled
+        },
+      }),
+  },
+  {
     title: "Kirpich",
     key: "kirpichEnabled",
     render: (row) =>
       h(NCheckbox, {
         checked: row.kirpichEnabled,
-        onChange: () => {
+        onUpdateChecked: () => {
           row.kirpichEnabled = !row.kirpichEnabled
         },
       }),
@@ -50,7 +61,7 @@ const columnDefs: DataTableColumns<Catchment> = [
     render: (row) =>
       h(NCheckbox, {
         checked: row.uplandEnabled,
-        onChange: () => {
+        onUpdateChecked: () => {
           row.uplandEnabled = !row.uplandEnabled
         },
       }),

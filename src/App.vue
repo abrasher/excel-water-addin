@@ -1,22 +1,26 @@
 <template>
-  <n-tabs type="segment">
-    <n-tab-pane name="Setup">
-      <Setup></Setup>
-    </n-tab-pane>
-    <n-tab-pane name="Methods"> <Methods> </Methods></n-tab-pane>
-    <n-tab-pane name="Results"> </n-tab-pane>
-  </n-tabs>
+  <n-space>
+    <n-layout>
+      <n-layout-content>
+        <n-tabs justify-content="space-evenly">
+          <n-tab-pane name="Methods"> <Methods> </Methods></n-tab-pane>
+          <n-tab-pane name="Define"><Define></Define></n-tab-pane>
+        </n-tabs>
+      </n-layout-content>
+    </n-layout>
+  </n-space>
 </template>
 
 <script setup lang="ts">
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
 import Setup from "./components/Setup.vue"
-import { NTabs, NTabPane } from "naive-ui"
+import { NSpace, NLayout, NTabs, NTabPane, NLayoutContent } from "naive-ui"
 import Methods from "./pages/Methods.vue"
+import Define from "./pages/Define.vue"
 </script>
 
-<style>
+<style scoped>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
