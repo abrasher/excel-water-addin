@@ -42,6 +42,7 @@ export const calculateCatchment = ({
       length,
       type: params.uplandType,
       velocity: params.uplandVelocity,
+      slope,
     })
   }
 

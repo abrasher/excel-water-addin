@@ -58,15 +58,21 @@ if (process.env.NODE_ENV === "development") {
       manningsEnabled: true,
       uplandEnabled: true,
       kirpichEnabled: true,
-    },
-    {
-      id: crypto.randomUUID(),
-      name: "Catchment 2",
-      scsEnabled: false,
-      manningsEnabled: true,
-      uplandEnabled: false,
-      kirpichEnabled: true,
+      curveNumber: 30,
+      kirpichChannelType: KIRPICHCHANNELTYPE.Normal,
+      kirpichHeightAuto: true,
+      uplandType: "paved",
+      length: 400,
+      slope: 5,
     }
+    // {
+    //   id: crypto.randomUUID(),
+    //   name: "Catchment 2",
+    //   scsEnabled: false,
+    //   manningsEnabled: true,
+    //   uplandEnabled: false,
+    //   kirpichEnabled: true,
+    // }
   )
   activeCatchmentId.value = catchments[0].id
 }
