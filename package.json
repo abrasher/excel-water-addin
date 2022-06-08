@@ -6,7 +6,9 @@
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
-    "sideload": "office-addin-debugging start manifest.xml --app excel"
+    "sideload": "office-addin-debugging start manifest.xml --app excel",
+    "test": "vitest",
+    "coverage": "vitest run --coverage"
   },
   "dependencies": {
     "vue": "^3.2.25"
@@ -19,6 +21,7 @@
     "typescript": "^4.5.4",
     "vfonts": "^0.0.3",
     "vite": "^2.9.9",
+    "vitest": "^0.14.1",
     "vue-tsc": "^0.34.7"
   },
   "prettier": {

@@ -16,9 +16,20 @@ import {
   NInput,
 } from "naive-ui"
 
-import { Catchment, catchments, addCatchment } from "../store"
+import { Catchment, catchments, addCatchment, removeCatchment } from "../store"
 
 const columnDefs: DataTableColumns<Catchment> = [
+  {
+    key: "remove",
+    render: (row) =>
+      h(
+        NButton,
+        { onClick: () => removeCatchment(row.id) },
+        {
+          default: () => "X",
+        }
+      ),
+  },
   {
     key: "name",
     title: "Name",
@@ -28,8 +39,29 @@ const columnDefs: DataTableColumns<Catchment> = [
         placeholder: "Catchment Name",
         value: row.name,
         onInput: (value) => {
-          console.log("test")
           row.name = value
+        },
+      }),
+  },
+  {
+    title: "Airport",
+    key: "airportEnabled",
+    render: (row) =>
+      h(NCheckbox, {
+        checked: row.airportEnabled,
+        onUpdateChecked: () => {
+          row.airportEnabled = !row.airportEnabled
+        },
+      }),
+  },
+  {
+    title: "Bransby Williams",
+    key: "bransbyWilliamsEnabled",
+    render: (row) =>
+      h(NCheckbox, {
+        checked: row.bransbyWilliamsEnabled,
+        onUpdateChecked: () => {
+          row.bransbyWilliamsEnabled = !row.bransbyWilliamsEnabled
         },
       }),
   },

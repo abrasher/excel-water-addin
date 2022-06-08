@@ -19,7 +19,7 @@
       <n-form-item label="Flow Length (m)" path="length">
         <n-input-number v-model:value="activeCatchment.length" />
       </n-form-item>
-      <n-form-item label="Slope %" path="slope">
+      <n-form-item label="Slope (%)" path="slope">
         <n-input-number v-model:value="activeCatchment.slope" />
       </n-form-item>
       <!-- SCS -->
@@ -29,18 +29,32 @@
           <n-input-number v-model:value="activeCatchment.curveNumber" />
         </n-form-item>
       </template>
+      <!-- Airport -->
+      <template v-if="activeCatchment?.airportEnabled">
+        <n-h3>Airport Method Parameters</n-h3>
+        <n-form-item label="Runoff Coeff." path="runoffCofficient">
+          <n-input-number v-model:value="activeCatchment.runoffCofficient" />
+        </n-form-item>
+      </template>
+      <!-- Bransby Williams -->
+      <template v-if="activeCatchment?.bransbyWilliamsEnabled">
+        <n-h3>Bransby Williams Parameters</n-h3>
+        <n-form-item label="Area (ha)" path="area">
+          <n-input-number v-model:value="activeCatchment.area" />
+        </n-form-item>
+      </template>
       <!-- Upland -->
       <template v-if="activeCatchment?.uplandEnabled">
         <n-h3>Upland Method Parameters</n-h3>
-        <n-form-item label="Land Type" path="type">
+        <n-form-item label="Land Type" path="uplandType">
           <n-select
             :options="uplandTypeOptions"
             v-model:value="activeCatchment.uplandType"
           />
         </n-form-item>
         <n-form-item
-          label="Velocity"
-          path="type"
+          label="Velocity (m/s)"
+          path="uplandVelocity"
           v-if="activeCatchment.uplandType === 'other'"
         >
           <n-input-number v-model:value="activeCatchment.uplandVelocity" />
@@ -83,7 +97,6 @@
 <script setup lang="ts">
 import { computed, ref } from "vue"
 import {
-  NDataTable,
   NSelect,
   NForm,
   NText,

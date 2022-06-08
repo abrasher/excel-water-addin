@@ -7,7 +7,7 @@ interface KinematicWaveParameters {
   slope: number
 }
 
-const kinematicWaveTc = ({
+export const kinematicWaveTc = ({
   length,
   mannings,
   rainfallIntensity,

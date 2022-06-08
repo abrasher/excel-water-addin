@@ -1,4 +1,4 @@
-import { computed, reactive, ref } from "vue"
+import { computed, reactive, ref, watch } from "vue"
 import { KIRPICHCHANNELTYPE } from "./calculations"
 
 export interface Catchment {
@@ -6,6 +6,7 @@ export interface Catchment {
   name: string
   length?: number
   slope?: number
+  area?: number
 
   scsEnabled: boolean
   curveNumber?: number
@@ -21,10 +22,22 @@ export interface Catchment {
   kirpichHeightAuto?: boolean
   kirpichHeightAutoValue?: number
   kirpichChannelType?: KIRPICHCHANNELTYPE
+  airportEnabled: boolean
+  runoffCofficient?: number
+  bransbyWilliamsEnabled: boolean
 }
 
-export const catchments = reactive<Catchment[]>([])
+const getStoredCatchments = () => {
+  const stored = localStorage.getItem("catchments")
+  return stored ? (JSON.parse(stored) as Catchment[]) : undefined
+}
+
+export const catchments = reactive<Catchment[]>(getStoredCatchments() ?? [])
 export const activeCatchmentId = ref<string | null>(null)
+
+watch(catchments, (value) => {
+  localStorage.setItem("catchments", JSON.stringify(value))
+})
 
 export const setActiveCatchment = (id: string) => {
   activeCatchmentId.value = id
@@ -38,6 +51,8 @@ export const addCatchment = () => {
     manningsEnabled: false,
     uplandEnabled: false,
     kirpichEnabled: false,
+    airportEnabled: false,
+    bransbyWilliamsEnabled: false,
   }
   catchments.push(base)
 }
@@ -49,30 +64,40 @@ export const activeCatchment = computed(() =>
   getCatchment(activeCatchmentId.value)
 )
 
-if (process.env.NODE_ENV === "development") {
-  catchments.push(
-    {
-      id: crypto.randomUUID(),
-      name: "Catchment 1",
-      scsEnabled: true,
-      manningsEnabled: true,
-      uplandEnabled: true,
-      kirpichEnabled: true,
-      curveNumber: 30,
-      kirpichChannelType: KIRPICHCHANNELTYPE.Normal,
-      kirpichHeightAuto: true,
-      uplandType: "paved",
-      length: 400,
-      slope: 5,
+export const removeCatchment = (id: string) => {
+  for (const [index, catchment] of catchments.entries()) {
+    console.log(catchment.id, id)
+    if (catchment.id === id) {
+      catchments.splice(index, 1)
     }
-    // {
-    //   id: crypto.randomUUID(),
-    //   name: "Catchment 2",
-    //   scsEnabled: false,
-    //   manningsEnabled: true,
-    //   uplandEnabled: false,
-    //   kirpichEnabled: true,
-    // }
-  )
+  }
+}
+
+if (process.env.NODE_ENV === "development") {
+  if (!localStorage.getItem("catchments")) {
+    catchments.push(
+      {
+        id: crypto.randomUUID(),
+        name: "Catchment 1",
+        scsEnabled: false,
+        manningsEnabled: false,
+        uplandEnabled: false,
+        kirpichEnabled: false,
+        airportEnabled: false,
+        bransbyWilliamsEnabled: true,
+      },
+      {
+        id: crypto.randomUUID(),
+        name: "Catchment 2",
+        scsEnabled: false,
+        manningsEnabled: false,
+        uplandEnabled: false,
+        kirpichEnabled: false,
+        airportEnabled: true,
+        bransbyWilliamsEnabled: false,
+      }
+    )
+  }
+
   activeCatchmentId.value = catchments[0].id
 }
