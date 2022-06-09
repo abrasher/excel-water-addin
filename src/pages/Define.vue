@@ -1,5 +1,5 @@
 <template>
-  <n-space vertical>
+  <n-space vertical class="define">
     <n-select
       :value="activeCatchmentId"
       :options="catchmentOptions"
@@ -24,28 +24,28 @@
       </n-form-item>
       <!-- SCS -->
       <template v-if="activeCatchment?.scsEnabled">
-        <n-h3>SCS Method Parameters</n-h3>
+        <n-h3 prefix="bar">SCS Method Parameters</n-h3>
         <n-form-item label="Curve Number" path="curveNumber">
           <n-input-number v-model:value="activeCatchment.curveNumber" />
         </n-form-item>
       </template>
       <!-- Airport -->
       <template v-if="activeCatchment?.airportEnabled">
-        <n-h3>Airport Method Parameters</n-h3>
+        <n-h3 prefix="bar">Airport Method Parameters</n-h3>
         <n-form-item label="Runoff Coeff." path="runoffCofficient">
           <n-input-number v-model:value="activeCatchment.runoffCofficient" />
         </n-form-item>
       </template>
       <!-- Bransby Williams -->
       <template v-if="activeCatchment?.bransbyWilliamsEnabled">
-        <n-h3>Bransby Williams Parameters</n-h3>
+        <n-h3 prefix="bar">Bransby Williams Parameters</n-h3>
         <n-form-item label="Area (ha)" path="area">
           <n-input-number v-model:value="activeCatchment.area" />
         </n-form-item>
       </template>
       <!-- Upland -->
       <template v-if="activeCatchment?.uplandEnabled">
-        <n-h3>Upland Method Parameters</n-h3>
+        <n-h3 prefix="bar">Upland Method Parameters</n-h3>
         <n-form-item label="Land Type" path="uplandType">
           <n-select
             :options="uplandTypeOptions"
@@ -62,7 +62,7 @@
       </template>
       <!-- Kirpich -->
       <template v-if="activeCatchment?.kirpichEnabled">
-        <n-h3><n-text>Kirpich Parameters</n-text></n-h3>
+        <n-h3 prefix="bar"><n-text>Kirpich Parameters</n-text></n-h3>
         <n-form-item label="Channel Type">
           <n-select
             v-model:value="activeCatchment.kirpichChannelType"
@@ -90,8 +90,6 @@
       <template> </template>
     </n-form>
   </n-space>
-
-  {{ catchments }}
 </template>
 
 <script setup lang="ts">
@@ -150,7 +148,11 @@ const catchmentOptions = computed(() =>
 
 <style>
 .define-form {
-  padding-left: 12px;
+  padding-left: 5px;
   margin-top: 10px;
+}
+
+.define {
+  padding-left: 10px;
 }
 </style>

@@ -1,19 +1,20 @@
 <template>
-  <n-button @click="addCatchment">Add Catchment</n-button>
-  <div>
+  <n-space align="center" vertical>
+    <n-button @click="addCatchment">Add Catchment</n-button>
+
     <n-data-table :data="catchments" :columns="columnDefs"> </n-data-table>
-  </div>
-  {{ catchments }}
+  </n-space>
 </template>
 
 <script setup lang="ts">
-import { h, onMounted, reactive, ref } from "vue"
+import { h } from "vue"
 import {
   DataTableColumns,
   NCheckbox,
   NDataTable,
   NButton,
   NInput,
+  NSpace,
 } from "naive-ui"
 
 import { Catchment, catchments, addCatchment, removeCatchment } from "../store"
@@ -21,6 +22,7 @@ import { Catchment, catchments, addCatchment, removeCatchment } from "../store"
 const columnDefs: DataTableColumns<Catchment> = [
   {
     key: "remove",
+    width: 10,
     render: (row) =>
       h(
         NButton,
@@ -33,6 +35,7 @@ const columnDefs: DataTableColumns<Catchment> = [
   {
     key: "name",
     title: "Name",
+    width: 180,
     render: (row) =>
       h(NInput, {
         type: "text",
@@ -45,7 +48,9 @@ const columnDefs: DataTableColumns<Catchment> = [
   },
   {
     title: "Airport",
+    width: 80,
     key: "airportEnabled",
+    className: "aligncenter",
     render: (row) =>
       h(NCheckbox, {
         checked: row.airportEnabled,
@@ -57,6 +62,8 @@ const columnDefs: DataTableColumns<Catchment> = [
   {
     title: "Bransby Williams",
     key: "bransbyWilliamsEnabled",
+    width: 80,
+    className: "aligncenter",
     render: (row) =>
       h(NCheckbox, {
         checked: row.bransbyWilliamsEnabled,
@@ -68,6 +75,8 @@ const columnDefs: DataTableColumns<Catchment> = [
   {
     title: "SCS",
     key: "scsEnabled",
+    width: 80,
+    className: "aligncenter",
     render: (row) =>
       h(NCheckbox, {
         checked: row.scsEnabled,
@@ -79,6 +88,8 @@ const columnDefs: DataTableColumns<Catchment> = [
   {
     title: "Kirpich",
     key: "kirpichEnabled",
+    width: 80,
+    className: "aligncenter",
     render: (row) =>
       h(NCheckbox, {
         checked: row.kirpichEnabled,
@@ -90,6 +101,8 @@ const columnDefs: DataTableColumns<Catchment> = [
   {
     title: "Upland",
     key: "uplandEnabled",
+    width: 80,
+    className: "aligncenter",
     render: (row) =>
       h(NCheckbox, {
         checked: row.uplandEnabled,
@@ -99,33 +112,10 @@ const columnDefs: DataTableColumns<Catchment> = [
       }),
   },
 ]
-
-const data = reactive([
-  {
-    id: 1,
-    name: "hello",
-    kirpich: true,
-  },
-  {
-    id: 1,
-    name: "hello 2",
-    kirpich: false,
-  },
-])
-
-onMounted(() => {
-  // Excel.run(async (context) => {
-  //   const table = context.workbook.tables.getItemOrNullObject(
-  //     "CatchmentDefinitons"
-  //   )
-  //   table.load()
-  //   await context.sync()
-  //   if (table.isNullObject) {
-  //     return
-  //   }
-  //   tableData.value = await excelTableToObjectArray<RowData>(table)
-  //   await context.sync()
-  //   loading.value = false
-  // })
-})
 </script>
+
+<style>
+.aligncenter {
+  text-align: center !important;
+}
+</style>
