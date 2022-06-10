@@ -82,7 +82,6 @@ if (process.env.NODE_ENV === "development") {
         kirpichEnabled: false,
         airportEnabled: false,
         bransbyWilliamsEnabled: true,
-        area: null,
       },
       {
         id: crypto.randomUUID(),
