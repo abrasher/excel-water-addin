@@ -57,12 +57,9 @@ export const addCatchment = () => {
   catchments.push(base)
 }
 
-const getCatchment = (id: string | null): Catchment | undefined =>
-  catchments.find((catchment) => catchment.id === id)
+const getCatchment = (id: string | null): Catchment | undefined => catchments.find((catchment) => catchment.id === id)
 
-export const activeCatchment = computed(() =>
-  getCatchment(activeCatchmentId.value)
-)
+export const activeCatchment = computed(() => getCatchment(activeCatchmentId.value))
 
 export const removeCatchment = (id: string) => {
   for (const [index, catchment] of catchments.entries()) {
@@ -85,6 +82,7 @@ if (process.env.NODE_ENV === "development") {
         kirpichEnabled: false,
         airportEnabled: false,
         bransbyWilliamsEnabled: true,
+        area: null,
       },
       {
         id: crypto.randomUUID(),

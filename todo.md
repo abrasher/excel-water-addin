@@ -1,5 +1,5 @@
-- [] Ensure onTableChanged is registered on workbook open
-  make disabled text in autocalculate darker
+make disabled text in autocalculate darker
+parameters are not reset if they are not defined in define view when switching catchments
 
 Questions
 
