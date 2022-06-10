@@ -3,7 +3,7 @@ export interface CalculationResults {
   length?: number
   area?: number
   slope?: number
-  ["runoffCoefficent"]?: number
+  ["runoffCoefficient"]?: number
   Airport?: number
   ["Bransby William"]?: number
   SCS?: number

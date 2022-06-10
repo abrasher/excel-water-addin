@@ -1,23 +1,23 @@
 <template>
   <n-space align="center" vertical>
-    <n-button @click="addCatchment">Add Catchment</n-button>
+    <n-button @click="setupExcel">Setup Table</n-button>
+    <n-button @click="store.addCatchment">Add Catchment</n-button>
 
-    <n-data-table :data="catchments" :columns="columnDefs"> </n-data-table>
+    <n-data-table :data="store.catchments" :columns="columnDefs"> </n-data-table>
   </n-space>
 </template>
 
 <script setup lang="ts">
 import { h } from "vue"
-import {
-  DataTableColumns,
-  NCheckbox,
-  NDataTable,
-  NButton,
-  NInput,
-  NSpace,
-} from "naive-ui"
+import { DataTableColumns, NCheckbox, NDataTable, NButton, NInput, NSpace } from "naive-ui"
 
-import { Catchment, catchments, addCatchment, removeCatchment } from "../store"
+import { Catchment, useStore } from "../store"
+
+const store = useStore()
+
+const setupExcel = () => {
+  Excel.run(async (context) => {})
+}
 
 const columnDefs: DataTableColumns<Catchment> = [
   {
@@ -26,7 +26,7 @@ const columnDefs: DataTableColumns<Catchment> = [
     render: (row) =>
       h(
         NButton,
-        { onClick: () => removeCatchment(row.id) },
+        { onClick: () => store.removeCatchment(row.id) },
         {
           default: () => "X",
         }

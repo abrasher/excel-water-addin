@@ -1,5 +1,6 @@
 import { computed, reactive, ref, watch } from "vue"
 import { KIRPICHCHANNELTYPE } from "./calculations"
+import { defineStore } from "pinia"
 
 export interface Catchment {
   id: string
@@ -8,93 +9,57 @@ export interface Catchment {
   slope?: number
   area?: number
 
-  scsEnabled: boolean
+  scsEnabled?: boolean
   curveNumber?: number
-  manningsEnabled: boolean
-  manningsKinematic?: {
-    mannings: number
-  }
-  uplandEnabled: boolean
+  manningsEnabled?: boolean
+  manningsCoefficient?: number
+  uplandEnabled?: boolean
   uplandType?: "paved" | "unpaved" | "other"
   uplandVelocity?: number
-  kirpichEnabled: boolean
+  kirpichEnabled?: boolean
   kirpichHeight?: number
   kirpichHeightAuto?: boolean
   kirpichHeightAutoValue?: number
   kirpichChannelType?: KIRPICHCHANNELTYPE
-  airportEnabled: boolean
-  runoffCofficient?: number
-  bransbyWilliamsEnabled: boolean
+  airportEnabled?: boolean
+  runoffCoefficient?: number
+  bransbyWilliamsEnabled?: boolean
 }
 
-const getStoredCatchments = () => {
-  const stored = localStorage.getItem("catchments")
-  return stored ? (JSON.parse(stored) as Catchment[]) : undefined
-}
-
-export const catchments = reactive<Catchment[]>(getStoredCatchments() ?? [])
-export const activeCatchmentId = ref<string | null>(null)
-
-watch(catchments, (value) => {
-  localStorage.setItem("catchments", JSON.stringify(value))
-})
-
-export const setActiveCatchment = (id: string) => {
-  activeCatchmentId.value = id
-}
-
-export const addCatchment = () => {
-  const base: Catchment = {
-    id: crypto.randomUUID(),
-    name: "Default Name",
-    scsEnabled: false,
-    manningsEnabled: false,
-    uplandEnabled: false,
-    kirpichEnabled: false,
-    airportEnabled: false,
-    bransbyWilliamsEnabled: false,
-  }
-  catchments.push(base)
-}
-
-const getCatchment = (id: string | null): Catchment | undefined => catchments.find((catchment) => catchment.id === id)
-
-export const activeCatchment = computed(() => getCatchment(activeCatchmentId.value))
-
-export const removeCatchment = (id: string) => {
-  for (const [index, catchment] of catchments.entries()) {
-    console.log(catchment.id, id)
-    if (catchment.id === id) {
-      catchments.splice(index, 1)
-    }
-  }
-}
-
-if (process.env.NODE_ENV === "development") {
-  if (!localStorage.getItem("catchments")) {
-    catchments.push(
-      {
-        id: crypto.randomUUID(),
-        name: "Catchment 1",
+export const useStore = defineStore("main", {
+  state: () => ({
+    catchments: new Map<string, Catchment>(),
+    activeCatchmentId: "",
+  }),
+  getters: {
+    numberOfCatchments: (state) => state.catchments.keys.length,
+    activeCatchment: (state) => state.catchments.get(state.activeCatchmentId),
+  },
+  actions: {
+    addCatchment() {
+      const id = crypto.randomUUID()
+      this.catchments.set(id, {
+        id,
+        name: `Area ${this.numberOfCatchments + 1}`,
         scsEnabled: false,
         manningsEnabled: false,
         uplandEnabled: false,
         kirpichEnabled: false,
         airportEnabled: false,
-        bransbyWilliamsEnabled: true,
-      },
-      {
-        id: crypto.randomUUID(),
-        name: "Catchment 2",
-        scsEnabled: false,
-        manningsEnabled: false,
-        uplandEnabled: false,
-        kirpichEnabled: false,
-        airportEnabled: true,
         bransbyWilliamsEnabled: false,
-      }
-    )
-  }
-
-  activeCatchmentId.value = catchments[0].id
-}
+      })
+    },
+    updateCatchment(id: string, value: Catchment) {
+      this.catchments.set(id, value)
+    },
+    setCatchmentsFromExcel(data: [string, string, number, number, number, number][]) {
+      data.forEach((data) => {
+        const [id, name, length, area, slope, runoffCoefficient] = data
+        this.catchments.set(id, { id, name, length, area, slope, runoffCoefficient })
+      })
+    },
+    removeCatchment(id: string) {
+      this.catchments.delete(id)
+    },
+  },
+})

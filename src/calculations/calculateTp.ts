@@ -19,7 +19,7 @@ const calculateCatchment = (
     name,
     length,
     slope,
-    runoffCoefficent: params.runoffCofficient,
+    runoffCoefficient: params.runoffCoefficient,
     area,
     errors: [],
     warnings: [],
@@ -27,15 +27,15 @@ const calculateCatchment = (
 
   // airport
   if (params.airportEnabled) {
-    if (params.runoffCofficient && length && slope) {
-      if (params.runoffCofficient > 0.4) {
+    if (params.runoffCoefficient && length && slope) {
+      if (params.runoffCoefficient > 0.4) {
         results.warnings.push({
           method: "Airport",
           reason: "Airport Method should only be used when runoff coefficient is less than 0.4",
         })
       }
 
-      results.Airport = airportMethod(params.runoffCofficient, length, slope) * modifier
+      results.Airport = airportMethod(params.runoffCoefficient, length, slope) * modifier
     } else {
       results.errors.push({
         method: "Airport",
@@ -47,7 +47,7 @@ const calculateCatchment = (
   // bransby
   if (params.bransbyWilliamsEnabled) {
     if (area && length && slope) {
-      if (params.runoffCofficient && params.runoffCofficient <= 0.4) {
+      if (params.runoffCoefficient && params.runoffCoefficient <= 0.4) {
         results.warnings.push({
           method: "Bransby Williams",
           reason: "Airport Method should be used instead when coefficient is less than 0.4",

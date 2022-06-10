@@ -4,13 +4,45 @@
       <n-radio-button label="Time to Peak" value="Peak" />
       <n-radio-button label="Time to Concentration" value="Concentration" />
     </n-radio-group>
-
+    <n-table>
+      <tr>
+        <th>Name</th>
+        <th>Airport</th>
+        <th>Bransby</th>
+        <th>SCS</th>
+        <th>Kirpich</th>
+        <th>Upland</th>
+      </tr>
+      <tbody>
+        <tr v-for="(result, index) in results" :key="index">
+          <td>
+            {{ result.name }}
+          </td>
+          <td>
+            {{ result.Airport?.toFixed(1) }}
+          </td>
+          <td>
+            {{ result["Bransby William"]?.toFixed(1) }}
+          </td>
+          <td>
+            {{ result.SCS?.toFixed(1) }}
+          </td>
+          <td>
+            {{ result.Kirpich?.toFixed(1) }}
+          </td>
+          <td>
+            {{ result.Upland?.toFixed(1) }}
+          </td>
+        </tr>
+      </tbody>
+    </n-table>
     <n-button @click="exportSummaryToSheet"> Export Results to New Sheet </n-button>
   </n-space>
 </template>
 
 <script setup lang="ts">
-import { NButton, NRadioGroup, NRadioButton, NSpace } from "naive-ui"
+import { computed } from "@vue/reactivity"
+import { NButton, NRadioGroup, NRadioButton, NSpace, NTable } from "naive-ui"
 import { ref } from "vue"
 import { calculateTpCatchment, calculateTcCatchment } from "../calculations/calculateTp"
 import { numberToLetters } from "../common/utils"
@@ -18,7 +50,9 @@ import { catchments } from "../store"
 
 const exportType = ref("Peak")
 
-const exportSummaryToSheet = () => {
+const headers = ["Name", "Airport", "Bransby", "SCS", "Kirpich", "Upland"]
+
+const results = computed(() => {
   const results = catchments.map((catchment) => {
     if (exportType.value === "Peak") {
       return calculateTpCatchment(catchment)
@@ -28,6 +62,10 @@ const exportSummaryToSheet = () => {
     throw Error("Unknown export type")
   })
 
+  return results
+})
+
+const exportSummaryToSheet = () => {
   Excel.run(async (context) => {
     const currentSheet = context.workbook.worksheets.getItemOrNullObject("Catchment Results")
 
