@@ -1,20 +1,35 @@
 <template>
-  <n-button @click="exportSummaryToSheet">
-    Export Results to New Sheet
-  </n-button>
+  <n-space vertical align="center">
+    <n-radio-group v-model:value="exportType">
+      <n-radio-button label="Time to Peak" value="Peak" />
+      <n-radio-button label="Time to Concentration" value="Concentration" />
+    </n-radio-group>
+
+    <n-button @click="exportSummaryToSheet"> Export Results to New Sheet </n-button>
+  </n-space>
 </template>
 
 <script setup lang="ts">
-import { NButton } from "naive-ui"
-import { calculateCatchment } from "../calculations/calculateTp"
+import { NButton, NRadioGroup, NRadioButton, NSpace } from "naive-ui"
+import { ref } from "vue"
+import { calculateTpCatchment, calculateTcCatchment } from "../calculations/calculateTp"
+import { numberToLetters } from "../common/utils"
 import { catchments } from "../store"
 
+const exportType = ref("Peak")
+
 const exportSummaryToSheet = () => {
-  const results = catchments.map((catchment) => calculateCatchment(catchment))
+  const results = catchments.map((catchment) => {
+    if (exportType.value === "Peak") {
+      return calculateTpCatchment(catchment)
+    } else if (exportType.value === "Concentration") {
+      return calculateTcCatchment(catchment)
+    }
+    throw Error("Unknown export type")
+  })
 
   Excel.run(async (context) => {
-    const currentSheet =
-      context.workbook.worksheets.getItemOrNullObject("Catchment Results")
+    const currentSheet = context.workbook.worksheets.getItemOrNullObject("Catchment Results")
 
     await context.sync()
 
@@ -24,27 +39,36 @@ const exportSummaryToSheet = () => {
 
     const exportSheet = context.workbook.worksheets.add("Catchment Results")
 
-    const exportTable = exportSheet.tables.add("A1:A1", true)
+    const exportTable = exportSheet.tables.add("A2:A2", true)
 
     exportTable.columns.add(-1, undefined, "Name")
-    exportTable.columns.add(-1, undefined, "Airport").getRange().numberFormat =
-      [["#.##"]]
-    exportTable.columns
-      .add(-1, undefined, "Bransby Williams")
-      .getRange().numberFormat = [["#.##"]]
-    exportTable.columns.add(-1, undefined, "SCS").getRange().numberFormat = [
-      ["#.##"],
-    ]
-    exportTable.columns.add(-1, undefined, "Kirpich").getRange().numberFormat =
-      [["#.##"]]
-    exportTable.columns.add(-1, undefined, "Upland").getRange().numberFormat = [
-      ["#.##"],
-    ]
+    exportTable.columns.add(-1, undefined, "Flow Length (m)").getRange().numberFormat = [["0.0"]]
+    exportTable.columns.add(-1, undefined, "Area (ha)").getRange().numberFormat = [["0.0"]]
+    exportTable.columns.add(-1, undefined, "Slope (%)").getRange().numberFormat = [["0.0"]]
+    exportTable.columns.add(-1, undefined, "Runoff Coeff.").getRange().numberFormat = [["0.0"]]
+    exportTable.columns.add(-1, undefined, "Airport").getRange().numberFormat = [["0.00"]]
+    exportTable.columns.add(-1, undefined, "Bransby Williams").getRange().numberFormat = [["0.00"]]
+    exportTable.columns.add(-1, undefined, "SCS").getRange().numberFormat = [["0.00"]]
+    exportTable.columns.add(-1, undefined, "Kirpich").getRange().numberFormat = [["0.00"]]
+    exportTable.columns.add(-1, undefined, "Upland").getRange().numberFormat = [["0.00"]]
 
     exportTable.columns.getItemAt(0).delete()
 
+    // Create time to peak header
+    exportSheet.getRange("F1:F1").values = [[`Time to ${exportType.value} (hr)`]]
+    const headerRange = exportSheet.getRange(`F1:${numberToLetters(9)}1`)
+    headerRange.merge()
+    headerRange.format.horizontalAlignment = "Center"
+    headerRange.format.borders.getItem("EdgeTop").style = "Continuous"
+    headerRange.format.borders.getItem("EdgeLeft").style = "Continuous"
+    headerRange.format.borders.getItem("EdgeRight").style = "Continuous"
+
     const rows = results.map((result) => [
       result.name,
+      result.length ?? "",
+      result.area ?? "",
+      result.slope ?? "",
+      result.runoffCoefficent ?? "",
       result.Airport ?? "",
       result["Bransby William"] ?? "",
       result.SCS ?? "",
@@ -52,14 +76,14 @@ const exportSummaryToSheet = () => {
       result.Upland ?? "",
     ])
 
-    console.log(rows)
-
     exportTable.rows.add(0, rows)
 
     exportTable.set({ name: "CatchmentResults" })
+    exportTable.getRange().format.autofitColumns()
+
+    await context.sync()
 
     exportSheet.activate()
-    await context.sync()
   })
 }
 </script>

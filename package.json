@@ -25,6 +25,7 @@
     "vue-tsc": "^0.34.7"
   },
   "prettier": {
-    "semi": false
+    "semi": false,
+    "printWidth": 120
   }
 }
