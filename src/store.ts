@@ -1,4 +1,3 @@
-import { computed, reactive, ref, watch } from "vue"
 import { KIRPICHCHANNELTYPE } from "./calculations"
 import { defineStore } from "pinia"
 
@@ -34,8 +33,12 @@ export const useStore = defineStore("main", {
   getters: {
     numberOfCatchments: (state) => state.catchments.keys.length,
     activeCatchment: (state) => state.catchments.get(state.activeCatchmentId),
+    catchmentsArray: (state) => Array.from(state.catchments.values()),
   },
   actions: {
+    setActiveCatchment(id: string) {
+      this.activeCatchmentId = id
+    },
     addCatchment() {
       const id = crypto.randomUUID()
       this.catchments.set(id, {

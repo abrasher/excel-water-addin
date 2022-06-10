@@ -46,14 +46,14 @@ import { NButton, NRadioGroup, NRadioButton, NSpace, NTable } from "naive-ui"
 import { ref } from "vue"
 import { calculateTpCatchment, calculateTcCatchment } from "../calculations/calculateTp"
 import { numberToLetters } from "../common/utils"
-import { catchments } from "../store"
+import { useStore } from "../store"
+
+const store = useStore()
 
 const exportType = ref("Peak")
 
-const headers = ["Name", "Airport", "Bransby", "SCS", "Kirpich", "Upland"]
-
 const results = computed(() => {
-  const results = catchments.map((catchment) => {
+  const results = store.catchmentsArray.map((catchment) => {
     if (exportType.value === "Peak") {
       return calculateTpCatchment(catchment)
     } else if (exportType.value === "Concentration") {
@@ -101,12 +101,12 @@ const exportSummaryToSheet = () => {
     headerRange.format.borders.getItem("EdgeLeft").style = "Continuous"
     headerRange.format.borders.getItem("EdgeRight").style = "Continuous"
 
-    const rows = results.map((result) => [
+    const rows = results.value.map((result) => [
       result.name,
       result.length ?? "",
       result.area ?? "",
       result.slope ?? "",
-      result.runoffCoefficent ?? "",
+      result.runoffCoefficient ?? "",
       result.Airport ?? "",
       result["Bransby William"] ?? "",
       result.SCS ?? "",

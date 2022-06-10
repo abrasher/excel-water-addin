@@ -3,7 +3,7 @@
     <n-button @click="setupExcel">Setup Table</n-button>
     <n-button @click="store.addCatchment">Add Catchment</n-button>
 
-    <n-data-table :data="store.catchments" :columns="columnDefs"> </n-data-table>
+    <n-data-table :data="store.catchmentsArray" :columns="columnDefs"> </n-data-table>
   </n-space>
 </template>
 
