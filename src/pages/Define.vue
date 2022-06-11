@@ -18,7 +18,7 @@
     >
       <n-h3 prefix="bar"><n-text>General Parameters</n-text></n-h3>
       <n-form-item label="Flow Length (m)" path="length">
-        <n-input-number v-model:value="store.activeCatchment.length" />
+        <n-input-number :value="store.activeCatchment.length" @update:value="" />
       </n-form-item>
       <n-form-item label="Slope (%)" path="slope">
         <n-input-number v-model:value="store.activeCatchment.slope" />

@@ -5,6 +5,7 @@
 
     <n-data-table :data="store.catchmentsArray" :columns="columnDefs"> </n-data-table>
   </n-space>
+  {{ store.catchments }}
 </template>
 
 <script setup lang="ts">
@@ -42,7 +43,7 @@ const columnDefs: DataTableColumns<Catchment> = [
         placeholder: "Catchment Name",
         value: row.name,
         onInput: (value) => {
-          row.name = value
+          store.updatePartial(row.id, { name: value })
         },
       }),
   },

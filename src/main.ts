@@ -7,20 +7,7 @@ Office.onReady(async () => {
   const app = createApp(App)
   const pinia = createPinia()
 
-  pinia.state.value = Office.context.document.settings.get("state")
-
   app.use(pinia)
-
-  const store = useStore()
-
-  store.$subscribe(
-    (mutation, state) => {
-      // Office.context.document.settings.set("pinia", JSON.stringify(state))
-      // Office.context.document.settings.saveAsync()
-      updateTable(state.catchments)
-    },
-    { deep: true, detached: true }
-  )
 
   await setupTable()
 
@@ -28,7 +15,9 @@ Office.onReady(async () => {
 })
 
 const setupTable = async () => {
-  Excel.run(async (context) => {
+  const store = useStore()
+
+  await Excel.run(async (context) => {
     let importSheet = context.workbook.worksheets.getItemOrNullObject("Catchment Definitions")
     await context.sync()
 
@@ -52,39 +41,29 @@ const setupTable = async () => {
     ]
 
     if (importTable.isNullObject) {
-      importSheet.getRange("A1:F1").values = [headers]
+      importSheet.getRange("A1:H1").values = [headers]
 
-      importTable = importSheet.tables.add("A1:G1", true)
+      importTable = importSheet.tables.add("A1:H1", true)
+      importTable.name = "CatchmentDefinitionTable"
     }
 
     importTable.onChanged.add(updateStore)
   })
 }
 
-const updateTable = (catchments: Map<string, Catchment>) => {
-  Excel.run(async (context) => {
-    try {
-      const importTable = context.workbook.tables.getItem("CatchmentDefinitionTable")
-      await context.sync()
-
-      const rows = []
-
-      catchments.forEach((c) => {
-        rows.push([c.id, c.name, c.length, c.area, c.slope, c.runoffCoefficient])
-      })
-    } catch {
-      console.error("Error while updating excel table")
-    }
-  })
-}
-
 const updateStore = async (args: Excel.TableChangedEventArgs) => {
+  console.log(args)
+
   const store = useStore()
+
+  if (args.changeType === "RowDeleted") return
 
   Excel.run(async (context) => {
     const importTable = context.workbook.tables.getItem(args.tableId)
     await context.sync()
 
+    importTable.rows.load()
+    await context.sync()
     const rowValues = importTable.rows.items.flatMap((row) => row.values)
 
     //@ts-ignore
