@@ -1,41 +1,53 @@
-import { reactive, ref } from "vue"
+import { reactive, Ref, ref, ssrContextKey } from "vue"
+import { numberToLetters } from "./utils"
 
 interface ColumnDef {
   key: string
   label: string
 }
 
-export class StoredTable<Row extends Record<string, string | number | boolean>, Col extends ColumnDef> {
+interface RowData {
+  [k: string]: any
+}
+
+export class StoredTable<Row extends RowData> {
   private excelTable?: Excel.Table
   private headers: string[]
   private keys: string[]
-  private vueState = reactive<Row[]>([])
+  vueState = ref<Row[]>([]) as Ref<Row[]>
+  private numColumns: number
+  isLoading = true
 
-  constructor(private tableName: string, sheetName: string, private colDefs: ColumnDef[]) {
+  constructor(private tableName: string, private sheetName: string, private colDefs: ColumnDef[]) {
     this.headers = colDefs.map((c) => c.label)
     this.keys = colDefs.map((c) => c.key)
+    this.numColumns = colDefs.length - 1
   }
 
   setup() {
     Excel.run(async (context) => {
-      let importSheet = context.workbook.worksheets.getItemOrNullObject("Catchment Definitions")
+      const rangeStr = `A1:${numberToLetters(this.numColumns)}1`
+
+      let importSheet = context.workbook.worksheets.getItemOrNullObject(this.sheetName)
       await context.sync()
 
       if (importSheet.isNullObject) {
-        importSheet = context.workbook.worksheets.add("Catchment Definitions")
+        importSheet = context.workbook.worksheets.add(this.sheetName)
       }
 
-      let importTable = importSheet.tables.getItemOrNullObject("CatchmentDefinitionTable")
+      let importTable = importSheet.tables.getItemOrNullObject(this.tableName)
       await context.sync()
 
       if (importTable.isNullObject) {
-        importSheet.getRange("A1:H1").values = [this.headers]
+        importSheet.getRange(rangeStr).values = [this.headers]
 
-        importTable = importSheet.tables.add("A1:H1", true)
-        importTable.name = "CatchmentDefinitionTable"
+        importTable = importSheet.tables.add(rangeStr, true)
+        importTable.name = this.tableName
       }
 
-      // importTable.onChanged.add(this.updateStore)
+      importTable.onChanged.add((args) => this.handleExcelUpdateEvent(args))
+
+      await context.sync()
     })
   }
 
@@ -64,12 +76,22 @@ export class StoredTable<Row extends Record<string, string | number | boolean>, 
     //since the table event doesn't give us the row index, just replace the entire object
     const keys = this.keys
 
-    if (args.address)
-      if (this.excelTable) {
-        this.vueState = this.excelTable?.rows.items.map((row) => {
-          return Object.fromEntries(row.values[0].map((val, index) => [keys[index], val]))
-        })
-      }
+    console.log("State Updated", args.address)
+
+    this.runTable(async (table) => {
+      const rows = table.rows.items.map((row) => {
+        return Object.fromEntries(row.values[0].map((val, index) => [keys[index], val]))
+      }) as Row[]
+
+      this.vueState.value = rows
+    })
+
+    // if (args.address)
+    //   if (this.excelTable) {
+    //     this.vueState.value = this.excelTable.rows.items.map((row) => {
+    //       return Object.fromEntries(row.values[0].map((val, index) => [keys[index], val]))
+    //     })
+    //   }
   }
 
   async updateProperty(index: number, value: Partial<Row>) {
@@ -96,16 +118,10 @@ export class StoredTable<Row extends Record<string, string | number | boolean>, 
 
   saveToExcel() {}
 
-  updateVueState(index: number, newState: Partial<Row>) {
-    this.vueState[index] = {
-      ...this.vueState[index],
-      ...newState,
-    }
-  }
-
   async runTable(func: (table: Excel.Table) => Promise<void>) {
     Excel.run(async (context) => {
       const excelTable = context.workbook.tables.getItem(this.tableName)
+      excelTable.rows.load()
       await context.sync()
 
       await func(excelTable)

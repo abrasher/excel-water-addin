@@ -13,7 +13,8 @@
   "dependencies": {
     "lodash-es": "^4.17.21",
     "pinia": "^2.0.14",
-    "vue": "^3.2.25"
+    "vue": "^3.2.25",
+    "vue-router": "^4.0.16"
   },
   "devDependencies": {
     "@types/office-js": "^1.0.258",
