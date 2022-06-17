@@ -105,7 +105,8 @@
         <bt:Url id="GetStarted.LearnMoreUrl" DefaultValue="https://go.microsoft.com/fwlink/?LinkId=276812" />
         <bt:Url id="Taskpane.Url" DefaultValue="http://localhost:3000/index.html" />
         <bt:Url id="Functions.Page.Url" DefaultValue="http://localhost:3000/functions/index.html" />
-        <bt:Url id="Functions.Script.Url" DefaultValue="http://localhost:3000/functions/functions.js" />
+        <bt:Url id="Functions.Script.Url" DefaultValue="http://localhost:3000/functions/functions.ts" />
+        <!-- <bt:Url id="Functions.Script.Url" DefaultValue="http://localhost:3000/functions/functions.js" /> -->
         <bt:Url id="Functions.Metadata.Url" DefaultValue="http://localhost:3000/functions/functions.json" />
       </bt:Urls>
       <!-- ShortStrings max characters==125. -->
