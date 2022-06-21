@@ -1,0 +1,44 @@
+{
+    "functions": [
+        {
+            "description": "Adds two numbers.",
+            "id": "ADD",
+            "name": "ADD",
+            "parameters": [
+                {
+                    "description": "First number.",
+                    "name": "first",
+                    "type": "number"
+                },
+                {
+                    "description": "Second number.",
+                    "name": "second",
+                    "type": "number"
+                }
+            ],
+            "result": {}
+        },
+        {
+            "description": "Calculate land area of a pond from MOE equations",
+            "id": "CALCULATEPONDLANDAREA",
+            "name": "CALCULATEPONDLANDAREA",
+            "parameters": [
+                {
+                    "name": "permanentVolume",
+                    "type": "number"
+                },
+                {
+                    "name": "permanentHeight",
+                    "type": "number"
+                },
+                {
+                    "name": "extendedVolume",
+                    "type": "number"
+                }
+            ],
+            "result": {
+                "type": "number"
+            }
+        }
+    ]
+}
