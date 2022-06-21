@@ -13,8 +13,6 @@
 </template>
 
 <script setup lang="ts">
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
 import Setup from "./components/Setup.vue"
 import { NSpace, NLayout, NTabs, NTabPane, NLayoutContent, NText } from "naive-ui"
 import Methods from "./pages/Methods.vue"
