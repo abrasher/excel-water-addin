@@ -1,4 +1,4 @@
-import { reactive, Ref, ref, ssrContextKey } from "vue"
+import { Ref, ref } from "vue"
 import { numberToLetters } from "./utils"
 
 interface ColumnDef {
@@ -7,7 +7,7 @@ interface ColumnDef {
 }
 
 interface RowData {
-  [k: string]: any
+  [k: string]: never
 }
 
 export class StoredTable<Row extends RowData> {
@@ -51,14 +51,6 @@ export class StoredTable<Row extends RowData> {
     })
   }
 
-  getExcelTable() {
-    Excel
-  }
-
-  private update() {}
-
-  updateTable() {}
-
   addRow(row: Partial<Row>) {
     this.runTable(async (table) => {
       table.rows.add(-1, [this.objectToRow(row)])
@@ -85,38 +77,15 @@ export class StoredTable<Row extends RowData> {
 
       this.vueState.value = rows
     })
-
-    // if (args.address)
-    //   if (this.excelTable) {
-    //     this.vueState.value = this.excelTable.rows.items.map((row) => {
-    //       return Object.fromEntries(row.values[0].map((val, index) => [keys[index], val]))
-    //     })
-    //   }
-  }
-
-  async updateProperty(index: number, value: Partial<Row>) {
-    Object.entries(value).forEach(() => {})
   }
 
   private getColumnIndex(headerName: string) {
     return this.headers.findIndex((x) => x === headerName)
   }
 
-  // private getRowIndex() {
-  //   this.runTable(async (table) => {
-  //     table.columns.getItemAt(0)
-  //   })
-  // }
-
   private objectToRow(row: Partial<Row>) {
     return this.colDefs.map((col) => row[col.key] ?? "")
   }
-
-  removeRow() {}
-
-  loadFromExcel() {}
-
-  saveToExcel() {}
 
   async runTable(func: (table: Excel.Table) => Promise<void>) {
     Excel.run(async (context) => {
@@ -130,14 +99,14 @@ export class StoredTable<Row extends RowData> {
   }
 }
 
-const parseAddress = (address: string) => {
-  const split = address.split(":")
-  const regex = /([A-Z]+)(\d+)/g
+// const parseAddress = (address: string) => {
+//   const split = address.split(":")
+//   const regex = /([A-Z]+)(\d+)/g
 
-  if (split.length === 1) {
-  } else {
-  }
-}
+//   if (split.length === 1) {
+//   } else {
+//   }
+// }
 
 type ObjectToTuple<T extends Record<string, unknown>> = [T[keyof T]]
 
