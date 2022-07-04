@@ -3,55 +3,83 @@
     <n-select
       :value="store.activeCatchmentId"
       :options="selectOptions"
-      @update:value="(val) => store.setActiveCatchment(val)"
-    >
+      @update:value="(val) => store.setActiveCatchment(val)">
     </n-select>
 
-    <n-form
-      v-if="store.activeCatchment"
+    <n-form v-if="store.activeCatchment"
       :model="store.activeCatchment"
       :key="store.activeCatchment.id"
       label-placement="left"
       label-width="auto"
-      class="define-form"
-      size="small"
-    >
-      <n-h3 prefix="bar"><n-text>General Parameters</n-text></n-h3>
-      <n-form-item label="Flow Length (m)" path="length">
-        <n-input-number :value="store.activeCatchment.length" @update:value="" />
+      class="define-form" size="small">
+      <n-h3 prefix="bar">
+        <n-text>General Parameters
+        </n-text>
+      </n-h3>
+      <n-form-item
+        label="Flow Length (m)"
+        path="length">
+        <n-input-number
+          :value="store.activeCatchment.length"
+          @update:value="" />
       </n-form-item>
-      <n-form-item label="Slope (%)" path="slope">
-        <n-input-number v-model:value="store.activeCatchment.slope" />
+      <n-form-item label="Slope (%)"
+        path="slope">
+        <n-input-number
+          v-model:value="store.activeCatchment.slope" />
       </n-form-item>
       <!-- SCS -->
-      <template v-if="store.activeCatchment.scsEnabled">
-        <n-h3 prefix="bar">SCS Method Parameters</n-h3>
-        <n-form-item label="Curve Number" path="curveNumber">
-          <n-input-number v-model:value="store.activeCatchment.curveNumber" />
+      <template
+        v-if="store.activeCatchment.scsEnabled">
+        <n-h3 prefix="bar">SCS Method
+          Parameters</n-h3>
+        <n-form-item
+          label="Curve Number"
+          path="curveNumber">
+          <n-input-number
+            v-model:value="store.activeCatchment.curveNumber" />
         </n-form-item>
       </template>
       <!-- Airport -->
-      <template v-if="store.activeCatchment?.airportEnabled">
-        <n-h3 prefix="bar">Airport Method Parameters</n-h3>
-        <n-form-item label="Runoff Coeff." path="runoffCofficient">
-          <n-input-number v-model:value="store.activeCatchment.runoffCoefficient" />
+      <template
+        v-if="store.activeCatchment?.airportEnabled">
+        <n-h3 prefix="bar">Airport
+          Method Parameters</n-h3>
+        <n-form-item
+          label="Runoff Coeff."
+          path="runoffCofficient">
+          <n-input-number
+            v-model:value="store.activeCatchment.runoffCoefficient" />
         </n-form-item>
       </template>
       <!-- Bransby Williams -->
-      <template v-if="store.activeCatchment?.bransbyWilliamsEnabled">
-        <n-h3 prefix="bar">Bransby Williams Parameters</n-h3>
-        <n-form-item label="Area (ha)" path="area">
-          <n-input-number v-model:value="store.activeCatchment.area" />
+      <template
+        v-if="store.activeCatchment?.bransbyWilliamsEnabled">
+        <n-h3 prefix="bar">Bransby
+          Williams Parameters</n-h3>
+        <n-form-item label="Area (ha)"
+          path="area">
+          <n-input-number
+            v-model:value="store.activeCatchment.area" />
         </n-form-item>
       </template>
       <!-- Upland -->
-      <template v-if="store.activeCatchment?.uplandEnabled">
-        <n-h3 prefix="bar">Upland Method Parameters</n-h3>
-        <n-form-item label="Land Type" path="uplandType">
-          <n-select :options="uplandTypeOptions" v-model:value="store.activeCatchment.uplandType" />
+      <template
+        v-if="store.activeCatchment?.uplandEnabled">
+        <n-h3 prefix="bar">Upland Method
+          Parameters</n-h3>
+        <n-form-item label="Land Type"
+          path="uplandType">
+          <n-select
+            :options="uplandTypeOptions"
+            v-model:value="store.activeCatchment.uplandType" />
         </n-form-item>
-        <n-form-item label="Velocity (m/s)" path="uplandVelocity" v-if="store.activeCatchment.uplandType === 'other'">
-          <n-input-number v-model:value="store.activeCatchment.uplandVelocity" />
+        <n-form-item
+          label="Velocity (m/s)"
+          path="uplandVelocity"
+          v-if="store.activeCatchment.uplandType === 'other'">
+          <n-input-number
+            v-model:value="store.activeCatchment.uplandVelocity" />
         </n-form-item>
       </template>
       <!-- Kirpich -->

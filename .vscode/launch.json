@@ -1,28 +1,25 @@
 {
   "configurations": [
     {
-      "name": "Attach by Process ID",
-      "processId": "${command:PickProcess}",
+      "name": "Excel Desktop (Edge Chromium)",
+      "type": "pwa-msedge",
       "request": "attach",
-      "skipFiles": ["<node_internals>/**"],
-      "type": "node"
+      "useWebView": true,
+      "port": 9229,
+      "timeout": 600000,
+      "webRoot": "${workspaceRoot}",
+      "preLaunchTask": "Debug: Excel Desktop",
+      "postDebugTask": "Stop Debug"
     },
     {
-      "type": "vscode-edge-devtools.debug",
+      "name": "Excel Desktop (Custom Functions)",
+      "type": "node",
       "request": "attach",
-      "name": "Attach to Microsoft Edge and open the Edge DevTools",
-      "url": "http://localhost:8080",
-      "webRoot": "${workspaceFolder}"
+      "port": 9229,
+      "timeout": 600000,
+      "preLaunchTask": "Debug: Excel Desktop",
+      "postDebugTask": "Stop Debug",
+      "resolveSourceMapLocations": null
     },
-    {
-      "type": "office-addin",
-      "request": "attach",
-      "name": "Attach to Office Add-ins",
-      "port": 9222,
-      "trace": "verbose",
-      "url": "http://localhost:3000/index.html?_host_Info=HOST$Win32$16.01$en-US$$$$0",
-      "webRoot": "${workspaceFolder}",
-      "timeout": 45000
-    }
   ]
 }
