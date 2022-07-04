@@ -18,7 +18,7 @@ export class StoredTable<Row extends RowData> {
   private numColumns: number
   isLoading = true
 
-  constructor(private tableName: string, private sheetName: string, private colDefs: ColumnDef[]) {
+  constructor (private tableName: string, private sheetName: string, private colDefs: ColumnDef[]) {
     this.headers = colDefs.map((c) => c.label)
     this.keys = colDefs.map((c) => c.key)
     this.numColumns = colDefs.length - 1
@@ -110,8 +110,3 @@ export class StoredTable<Row extends RowData> {
 
 type ObjectToTuple<T extends Record<string, unknown>> = [T[keyof T]]
 
-interface Rows {
-  t: string
-  q: number
-  j: string
-}

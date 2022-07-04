@@ -1,12 +1,18 @@
 <template>
   <div>
-    <n-button @click="setupTable">Setup</n-button>
-    <n-button @click="addRow">Add Row</n-button>
-    <n-button @click="t">Add Old Row</n-button>
+    <n-button @click="setupTable">Setup
+    </n-button>
+    <n-button @click="addRow">Add Row
+    </n-button>
+    <n-button @click="t">Add Old Row
+    </n-button>
   </div>
-  <n-form v-for="(row, index) of dataTable.vueState.value" :key="index">
+  <n-form
+    v-for="(row, index) of dataTable.vueState.value"
+    :key="index">
     <n-form-item label="Name">
-      <n-input :value="row.name" @change=""> </n-input>
+      <n-input :value="row.name"
+        @change=""> </n-input>
     </n-form-item>
   </n-form>
   <p>{{ dataTable.vueState }}</p>

@@ -7,6 +7,7 @@
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
     "sideload": "office-addin-debugging start manifest.xml --app excel",
+    "stop": "office-addin-debugging stop manifest.xml",
     "test": "vitest",
     "coverage": "vitest run --coverage",
     "validate": "office-addin-manifest validate manifest.xml"
@@ -23,6 +24,7 @@
     "@typescript-eslint/eslint-plugin": "^5.29.0",
     "@typescript-eslint/parser": "^5.29.0",
     "@vitejs/plugin-vue": "^2.3.3",
+    "@volar-plugins/prettyhtml": "^1.0.0",
     "custom-functions-metadata": "^1.2.9",
     "eslint": "^8.18.0",
     "eslint-config-prettier": "^8.5.0",

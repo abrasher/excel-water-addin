@@ -1,0 +1,39 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Debug: Excel Desktop",
+      "type": "npm",
+      "script": "sideload",
+      "presentation": {
+        "clear": true,
+        "panel": "dedicated",
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Dev Server",
+      "type": "npm",
+      "script": "dev",
+      "presentation": {
+        "clear": true,
+        "panel": "dedicated"
+      },
+      "problemMatcher": [],
+      "runOptions": {
+        "runOn": "folderOpen"
+      }
+    },
+    {
+      "label": "Stop Debug",
+      "type": "npm",
+      "script": "stop",
+      "presentation": {
+        "clear": true,
+        "panel": "shared",
+        "showReuseMessage": false
+      },
+      "problemMatcher": []
+    },
+  ]
+}
