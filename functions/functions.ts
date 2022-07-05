@@ -1,18 +1,4 @@
 /**
- * Adds two numbers.
- * @customfunction
- * @param first First number.
- * @param second Second number.
- * @returns The sum of the two numbers.
- */
-
-function add(first: number, second: number): number {
-  return first + second
-}
-
-CustomFunctions.associate("ADD", add)
-
-/**
  * Calculate land area of a pond from MOE equations
  * @customfunction
  * @param permanentVolume
@@ -42,12 +28,11 @@ function calculatePondLandArea(permanentVolume: number, permanentHeight: number,
 
 CustomFunctions.associate("CALCULATEPONDLANDAREA", calculatePondLandArea)
 
-function calculatePond() {
-  const impervious = [35, 55, 70, 85]
-  const storage = [140, 190, 225, 250]
+function calculatePondVolume(impervious: number) {
+  // Storage Equation for 80% SS removal, r-squared of 0.9978
+  const storageEquation = (impervious: number) => 13.392 * impervious ** 0.6612
 
+  return storageEquation(storageEquation(impervious))
 }
 
-
-
-export { }
+CustomFunctions.associate("CALCULATEPONDVOLUME", calculatePondVolume)

@@ -5,11 +5,6 @@
   "editor.linkedEditing": false,
   "editor.scrollbar.scrollByPage": false,
   "volar.icon.preview": false,
-  "volar.vueserver.useSecondServer": true,
-  "editor.formatOnSave": true,
-  "typescript.format.insertSpaceAfterConstructor": true,
-  "typescript.format.insertSpaceAfterTypeAssertion": true,
-  "typescript.format.semicolons": "remove",
-  "html.format.wrapAttributes": "auto",
-  "html.format.wrapLineLength": 40,
+  "volar.completion.autoImportComponent": true
+  //"volar.vueserver.useSecondServer": true,
 }

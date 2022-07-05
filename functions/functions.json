@@ -1,24 +1,6 @@
 {
     "functions": [
         {
-            "description": "Adds two numbers.",
-            "id": "ADD",
-            "name": "ADD",
-            "parameters": [
-                {
-                    "description": "First number.",
-                    "name": "first",
-                    "type": "number"
-                },
-                {
-                    "description": "Second number.",
-                    "name": "second",
-                    "type": "number"
-                }
-            ],
-            "result": {}
-        },
-        {
             "description": "Calculate land area of a pond from MOE equations",
             "id": "CALCULATEPONDLANDAREA",
             "name": "CALCULATEPONDLANDAREA",
@@ -39,6 +21,19 @@
             "result": {
                 "type": "number"
             }
+        },
+        {
+            "description": "Calculate land area of a pond from MOE equations",
+            "id": "CALCULATEPONDVOLUME",
+            "name": "CALCULATEPONDVOLUME",
+            "parameters": [
+                {
+                    "description": "Percent impervious non-demical",
+                    "name": "impervious",
+                    "type": "number"
+                }
+            ],
+            "result": {}
         }
     ]
 }

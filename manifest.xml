@@ -41,21 +41,7 @@
         <!-- <Runtimes>
           <Runtime resid="Taskpane.Url" lifetime="long" />
         </Runtimes> -->
-        <AllFormFactors>
-          <!-- Define Custom Functions -->
-          <ExtensionPoint xsi:type="CustomFunctions">
-            <Script>
-              <SourceLocation resid="Functions.Script.Url"/>
-            </Script>
-            <Page>
-              <SourceLocation resid="Functions.Page.Url" />
-            </Page>
-            <Metadata>
-              <SourceLocation resid="Functions.Metadata.Url"/>
-            </Metadata>
-            <!-- <Namespace resid="Functions.Namespace"/> -->
-          </ExtensionPoint>
-        </AllFormFactors>
+        
         <DesktopFormFactor>
           <ExtensionPoint xsi:type="PrimaryCommandSurface">
             <OfficeTab id="TabHome">
@@ -106,19 +92,18 @@
         <bt:Url id="Taskpane.Url" DefaultValue="http://localhost:3000/index.html" />
         <bt:Url id="Functions.Page.Url" DefaultValue="http://localhost:3000/functions/index.html" />
         <bt:Url id="Functions.Script.Url" DefaultValue="http://localhost:3000/functions/functions.ts" />
-        <!-- <bt:Url id="Functions.Script.Url" DefaultValue="http://localhost:3000/functions/functions.js" /> -->
         <bt:Url id="Functions.Metadata.Url" DefaultValue="http://localhost:3000/functions/functions.json" />
       </bt:Urls>
       <!-- ShortStrings max characters==125. -->
       <bt:ShortStrings>
         <bt:String id="Functions.Namespace" DefaultValue="URBAN" />
-        <bt:String id="GetStarted.Title" DefaultValue="Get started with your sample add-in!" />
-        <bt:String id="CommandsGroup.Label" DefaultValue="Commands Group" />
+        <bt:String id="GetStarted.Title" DefaultValue="Get started with Urbantech Add-in" />
+        <bt:String id="CommandsGroup.Label" DefaultValue="Urbantech" />
         <bt:String id="TaskpaneButton.Label" DefaultValue="Show Taskpane" />
       </bt:ShortStrings>
       <!-- LongStrings max characters==250. -->
       <bt:LongStrings>
-        <bt:String id="GetStarted.Description" DefaultValue="Your sample add-in loaded succesfully. Go to the HOME tab and click the 'Show Taskpane' button to get started." />
+        <bt:String id="GetStarted.Description" DefaultValue="Your add-in is loaded, select it from the Home tab" />
         <bt:String id="TaskpaneButton.Tooltip" DefaultValue="Click to Show a Taskpane" />
       </bt:LongStrings>
     </Resources>

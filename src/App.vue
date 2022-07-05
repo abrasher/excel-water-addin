@@ -1,6 +1,9 @@
 <template>
   <n-space vertical>
     <n-layout>
+      <n-layout-header>
+        <NavHeader></NavHeader>
+      </n-layout-header>
       <n-layout-content>
         <router-view></router-view>
       </n-layout-content>
@@ -9,7 +12,8 @@
 </template>
 
 <script setup lang="ts">
-import { NSpace, NLayout, NTabs, NTabPane, NLayoutContent, NText } from "naive-ui"
+import { NSpace, NLayout, NLayoutContent, NLayoutHeader } from "naive-ui"
+import NavHeader from "./components/NavHeader.vue"
 </script>
 
 <style scoped>
