@@ -40,7 +40,7 @@ import { caclulateExtendedDetention, calculateLandArea, calculatePondVolume } fr
 const currencyFormater = new Intl.NumberFormat("en-CA", {
   style: "currency",
   currency: "CAD",
-  maximumSignificantDigits: 4
+  maximumSignificantDigits: 4,
 })
 
 const resultsColumns: DataTableColumns<ScenarioResult> = [
@@ -49,29 +49,29 @@ const resultsColumns: DataTableColumns<ScenarioResult> = [
     title: "Pond Cost",
     render(row) {
       return h("span", currencyFormater.format(row.pondCost))
-    }
+    },
   },
   {
     key: "usdcCost",
     title: "Underground SDC Cost",
     render(row) {
       return h("span", currencyFormater.format(row.usdcCost))
-    }
+    },
   },
   {
     key: "maintenanceCost",
     title: "Maintenance Cost",
     render(row) {
       return h("span", currencyFormater.format(row.pondCost))
-    }
+    },
   },
   {
     key: "landCostSaved",
     title: "Land Value Saved ($)",
     render(row) {
       return h("span", currencyFormater.format(row.landCostSaved))
-    }
-  }
+    },
+  },
 ]
 
 const columns: DataTableColumns<Scenario> = [
@@ -83,9 +83,9 @@ const columns: DataTableColumns<Scenario> = [
         value: row.landCost,
         onUpdateValue(v) {
           scenarios.value[index].landCost = v!
-        }
+        },
       })
-    }
+    },
   },
   {
     key: "usdcPermanent",
@@ -95,9 +95,9 @@ const columns: DataTableColumns<Scenario> = [
         value: row.usdcPermanent,
         onUpdateValue(v) {
           scenarios.value[index].usdcPermanent = v!
-        }
+        },
       })
-    }
+    },
   },
   {
     key: "usdcActive",
@@ -107,9 +107,9 @@ const columns: DataTableColumns<Scenario> = [
         value: row.usdcActive,
         onUpdateValue(v) {
           scenarios.value[index].usdcActive = v!
-        }
+        },
       })
-    }
+    },
   },
   {
     key: "aboveUnitCost",
@@ -119,9 +119,9 @@ const columns: DataTableColumns<Scenario> = [
         value: row.aboveUnitCost,
         onUpdateValue(v) {
           scenarios.value[index].aboveUnitCost = v!
-        }
+        },
       })
-    }
+    },
   },
   {
     key: "aboveMaintenanceCost",
@@ -131,9 +131,9 @@ const columns: DataTableColumns<Scenario> = [
         value: row.aboveMaintenanceCost,
         onUpdateValue(v) {
           scenarios.value[index].aboveMaintenanceCost = v!
-        }
+        },
       })
-    }
+    },
   },
   {
     key: "usdcUnitCost",
@@ -143,9 +143,9 @@ const columns: DataTableColumns<Scenario> = [
         value: row.usdcUnitCost,
         onUpdateValue(v) {
           scenarios.value[index].usdcUnitCost = v!
-        }
+        },
       })
-    }
+    },
   },
   {
     key: "usdcMaintenanceCost",
@@ -155,10 +155,10 @@ const columns: DataTableColumns<Scenario> = [
         value: row.usdcMaintenanceCost,
         onUpdateValue(v) {
           scenarios.value[index].usdcMaintenanceCost = v!
-        }
+        },
       })
-    }
-  }
+    },
+  },
 ]
 
 interface Pond {
@@ -187,7 +187,7 @@ interface ScenarioResult {
 const pond = reactive({
   catchmentArea: 10,
   imperviousness: 50,
-  permanentHeight: 1.5
+  permanentHeight: 1.5,
 })
 
 const addScenario = () => {
@@ -198,7 +198,7 @@ const addScenario = () => {
     usdcActive: 20,
     usdcUnitCost: 1000,
     usdcMaintenanceCost: 50,
-    usdcPermanent: 20
+    usdcPermanent: 20,
   })
 }
 
@@ -213,7 +213,7 @@ const calculateScenario = (pond: Pond, scenario: Scenario): ScenarioResult => {
     },
     get landCost() {
       return this.area * scenario.landCost
-    }
+    },
   }
 
   const permPond = (100 - scenario.usdcPermanent) / 100
@@ -235,7 +235,7 @@ const calculateScenario = (pond: Pond, scenario: Scenario): ScenarioResult => {
     },
     get maintenanceCost() {
       return this.totalVolume * scenario.aboveMaintenanceCost
-    }
+    },
   }
 
   const permUSDC = scenario.usdcPermanent / 100
@@ -251,7 +251,7 @@ const calculateScenario = (pond: Pond, scenario: Scenario): ScenarioResult => {
     },
     get maintenanceCost() {
       return this.totalVolume * scenario.usdcMaintenanceCost
-    }
+    },
   }
 
   const landCostSaved = onlyPond.landCost - wetPond.landCost
@@ -261,11 +261,11 @@ const calculateScenario = (pond: Pond, scenario: Scenario): ScenarioResult => {
     pondCost: wetPond.capitalCost,
     usdcCost: usdc.capitalCost,
     maintenanceCost: wetPond.maintenanceCost + usdc.maintenanceCost,
-    pondArea: wetPond.area
+    pondArea: wetPond.area,
   }
 }
 
 const results = computed(() => {
-  return scenarios.value.map(scenario => calculateScenario(pond, scenario))
+  return scenarios.value.map((scenario) => calculateScenario(pond, scenario))
 })
 </script>

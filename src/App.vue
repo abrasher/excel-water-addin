@@ -22,8 +22,8 @@ const themeOverrides: GlobalThemeOverrides = {
   Menu: {
     itemTextColorHorizontal: colors.gray[100],
     itemTextColorActive: "#46785EFF",
-    itemTextColorHover: "rgba(210, 193, 14, 1)"
-  }
+    itemTextColorHover: "rgba(210, 193, 14, 1)",
+  },
 }
 </script>
 

@@ -23,7 +23,7 @@ const storageLerp = (x0: number) => {
     return lerp(210, 185, alpha)
   }
 
-  const x2Index = x.findIndex(i => !(i < x0))
+  const x2Index = x.findIndex((i) => !(i < x0))
   const x1Index = x2Index - 1
 
   const x1 = x[x1Index]
