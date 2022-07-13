@@ -1,5 +1,5 @@
 <template>
-  <n-menu mode="horizontal" :options="menuOptions" class="grow" />
+  <n-menu mode="horizontal" :options="menuOptions" class="w-full bg-gray-900" />
 </template>
 
 <script lang="ts" setup>

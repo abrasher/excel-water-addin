@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<OfficeApp
-  xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
-  xmlns:ov="http://schemas.microsoft.com/office/taskpaneappversionoverrides"
-  xsi:type="TaskPaneApp">
+<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0" xmlns:ov="http://schemas.microsoft.com/office/taskpaneappversionoverrides" xsi:type="TaskPaneApp">
 
   <Id>e41a3962-9cb3-42c1-a44d-575a796402cc</Id>
   <Version>1.0.0.0</Version>
@@ -14,23 +9,28 @@
 
   <!-- The display name of your add-in. Used on the store and various places of the Office UI such as the add-ins dialog. -->
   <DisplayName DefaultValue="Time to Peak Calculator" />
-  <Description DefaultValue="Contains commands for water resources"/>
-  
+  <Description DefaultValue="Contains commands for water resources" />
+
 
   <!-- Icon for your add-in. Used on installation screens and the add-ins dialog. -->
   <IconUrl DefaultValue="https://localhost:3000/assets/icon-32.png" />
-  <HighResolutionIconUrl DefaultValue="https://localhost:3000/assets/icon-80.png"/>
-  <SupportUrl DefaultValue="https://www.contoso.com/help"/>
+  <HighResolutionIconUrl DefaultValue="https://localhost:3000/assets/icon-80.png" />
+  <SupportUrl DefaultValue="https://www.contoso.com/help" />
   <Hosts>
-    <Host Name="Workbook"/>
+    <Host Name="Workbook" />
   </Hosts>
+  <Requirements>
+    <Sets DefaultMinVersion="1.1">
+      <Set Name="CustomFunctionsRuntime" MinVersion="1.1" />
+    </Sets>
+  </Requirements>
   <!-- <Requirements>
     <Sets DefaultMinVersion="1.1">
       <Set Name="SharedRuntime" MinVersion="1.1"/>
     </Sets>
   </Requirements> -->
   <DefaultSettings>
-    <SourceLocation DefaultValue="https://localhost:3000/index.html"/>
+    <SourceLocation DefaultValue="https://localhost:3000/index.html" />
   </DefaultSettings>
 
   <Permissions>ReadWriteDocument</Permissions>
@@ -41,7 +41,21 @@
         <!-- <Runtimes>
           <Runtime resid="Taskpane.Url" lifetime="long" />
         </Runtimes> -->
-        
+        <AllFormFactors>
+          <!-- Define Custom Functions -->
+          <ExtensionPoint xsi:type="CustomFunctions">
+            <Script>
+              <SourceLocation resid="Functions.Script.Url" />
+            </Script>
+            <Page>
+              <SourceLocation resid="Functions.Page.Url" />
+            </Page>
+            <Metadata>
+              <SourceLocation resid="Functions.Metadata.Url" />
+            </Metadata>
+            <Namespace resid="Functions.Namespace" />
+          </ExtensionPoint>
+        </AllFormFactors>
         <DesktopFormFactor>
           <ExtensionPoint xsi:type="PrimaryCommandSurface">
             <OfficeTab id="TabHome">
@@ -52,8 +66,8 @@
                   <bt:Image size="32" resid="Icon.32x32" />
                   <bt:Image size="80" resid="Icon.80x80" />
                 </Icon>
-                 <!-- Control. It can be of type "Button" or "Menu". -->
-                 <Control xsi:type="Button" id="TaskpaneButton">
+                <!-- Control. It can be of type "Button" or "Menu". -->
+                <Control xsi:type="Button" id="TaskpaneButton">
                   <Label resid="TaskpaneButton.Label" />
                   <Supertip>
                     <!-- ToolTip title. resid must point to a ShortString resource. -->
@@ -83,9 +97,9 @@
 
     <Resources>
       <bt:Images>
-        <bt:Image id="Icon.16x16" DefaultValue="http://localhost:3000/assets/logo.png"/>
-        <bt:Image id="Icon.32x32" DefaultValue="http://localhost:3000/assets/logo.png"/>
-        <bt:Image id="Icon.80x80" DefaultValue="http://localhost:3000/assets/logo.png"/>
+        <bt:Image id="Icon.16x16" DefaultValue="http://localhost:3000/assets/logo.png" />
+        <bt:Image id="Icon.32x32" DefaultValue="http://localhost:3000/assets/logo.png" />
+        <bt:Image id="Icon.80x80" DefaultValue="http://localhost:3000/assets/logo.png" />
       </bt:Images>
       <bt:Urls>
         <bt:Url id="GetStarted.LearnMoreUrl" DefaultValue="https://go.microsoft.com/fwlink/?LinkId=276812" />

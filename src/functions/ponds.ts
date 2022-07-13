@@ -40,6 +40,8 @@ const storageLerp = (x0: number) => {
 }
 
 export const calculateLandArea = (permanentHeight: number, permanentVolume: number, extendedVolume: number) => {
+  if (!permanentVolume && !extendedVolume) return 0
+
   const x1 = (256 * permanentHeight ** 4 - 12 * ((64 / 3) * permanentHeight ** 3 - permanentVolume)) ^ (1 / 2)
   const x2 = 16 * permanentHeight ** 2
   const x3 = 6 * permanentHeight
