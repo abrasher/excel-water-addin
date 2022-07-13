@@ -14,10 +14,11 @@
       "es2020",
       "dom"
     ],
-    // "types": [
-    //   "naive-ui/volar",
-    //   "@types/custom-functions-runtime"
-    // ],
+    "types": [
+      "naive-ui/volar",
+      "@types/custom-functions-runtime",
+      "@types/office-js"
+    ],
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
