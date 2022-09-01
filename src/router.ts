@@ -1,19 +1,15 @@
-import TimeToPeak from "./pages/TimeToPeak.vue"
-import Test from "./pages/Test.vue"
+import TimeToPeakCalculator from "./pages/TimeToPeakCalculator.vue"
 import PondCalculator from "./pages/PondCalculator.vue"
+import Home from "./pages/Home.vue"
 
-import { createRouter, createMemoryHistory, createWebHashHistory, createWebHistory } from "vue-router"
+import { createRouter, createMemoryHistory } from "vue-router"
 
 export const router = createRouter({
   history: createMemoryHistory(),
   routes: [
     {
       path: "/",
-      component: Test,
-    },
-    {
-      path: "/test",
-      component: Test,
+      component: Home,
     },
     {
       path: "/ponds",
@@ -21,7 +17,7 @@ export const router = createRouter({
     },
     {
       path: "/timetopeak",
-      component: TimeToPeak,
+      component: TimeToPeakCalculator,
     },
   ],
 })

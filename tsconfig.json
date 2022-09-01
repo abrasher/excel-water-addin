@@ -11,11 +11,11 @@
     "isolatedModules": true,
     "esModuleInterop": true,
     "lib": [
-      "es2020",
+      "es2022",
       "dom"
     ],
     "types": [
-      "naive-ui/volar",
+      // "naive-ui/volar",
       "@types/custom-functions-runtime",
       "@types/office-js"
     ],

@@ -3,7 +3,6 @@ import "virtual:windi-devtools"
 import { createApp } from "vue"
 import App from "./App.vue"
 import { createPinia } from "pinia"
-import { setupTable } from "./store"
 import { router } from "./router"
 
 Office.onReady(async () => {
@@ -13,8 +12,6 @@ Office.onReady(async () => {
   app.use(router)
 
   app.use(pinia)
-
-  await setupTable()
 
   app.mount("#app")
 })

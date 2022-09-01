@@ -20,9 +20,9 @@
         "panel": "dedicated"
       },
       "problemMatcher": [],
-      "runOptions": {
-        "runOn": "folderOpen"
-      }
+      // "runOptions": {
+      //   "runOn": "folderOpen"
+      // }
     },
     {
       "label": "Stop Debug",

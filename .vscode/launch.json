@@ -2,7 +2,7 @@
   "configurations": [
     {
       "name": "Excel Desktop (Edge Chromium)",
-      "type": "pwa-msedge",
+      "type": "msedge",
       "request": "attach",
       "useWebView": true,
       "port": 9229,

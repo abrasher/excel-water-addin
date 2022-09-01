@@ -1,4 +1,4 @@
-import { calculatePondVolume } from "./ponds"
+import { calculatePondPermanentVolume } from "./ponds"
 
 /**
  * Calculate pond volume from MOE estimates
@@ -7,7 +7,7 @@ import { calculatePondVolume } from "./ponds"
  * @returns Land area in m<sup>2</sup>
  */
 function calcPondVolume(catchmentArea: number, impervious: number) {
-  return calculatePondVolume(catchmentArea, impervious)
+  return calculatePondPermanentVolume(catchmentArea, impervious)
 }
 
 CustomFunctions.associate("CALCULATEPONDVOLUME", calcPondVolume)

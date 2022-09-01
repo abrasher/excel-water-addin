@@ -1,5 +1,10 @@
 <template>
-  <n-menu mode="horizontal" :options="menuOptions" class="w-full bg-gray-900" />
+  <n-menu
+    mode="horizontal"
+    :options="menuOptions"
+    class="w-full text-white"
+    style="background-color: #41b6e6"
+  />
 </template>
 
 <script lang="ts" setup>
@@ -14,12 +19,12 @@ const renderRoute = (to: string, label: string) => {
 
 const menuOptions: MenuOption[] = [
   {
-    label: renderRoute("/", "Home"),
-    key: "home",
+    label: renderRoute("/ponds", "Pond Calculator"),
+    key: "ponds",
   },
   {
-    label: renderRoute("/ponds", "Urban Ponds"),
-    key: "ponds",
+    label: renderRoute("/timetopeak", "Time to Peak Calculator"),
+    key: "timetopeak",
   },
 ]
 </script>
