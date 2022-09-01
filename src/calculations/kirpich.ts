@@ -1,9 +1,4 @@
-export enum KIRPICHCHANNELTYPE {
-  Normal = 1,
-  OverlandGrassed = 2,
-  ConcreteAsphalt = 0.4,
-  ConcreteLinedChannel = 0.2,
-}
+import { KIRPICHCHANNELTYPE } from "../types"
 
 export const kirpichChannelType = [
   {

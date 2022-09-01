@@ -167,7 +167,7 @@
 
 <script setup lang="ts">
 import { computed, h, ref } from "vue"
-import { KIRPICHCHANNELTYPE, kirpichChannelType } from "../calculations"
+import { kirpichChannelType } from "../calculations"
 import { calculateTpCatchment, calculateTcCatchment } from "../calculations/calculateTp"
 
 import {
@@ -187,29 +187,7 @@ import {
   NCheckbox,
 } from "naive-ui"
 import { numberToLetters } from "../common/utils"
-
-interface Catchment {
-  id: string
-  name: string
-  length?: number
-  slope?: number
-  area?: number
-  scsEnabled?: boolean
-  curveNumber?: number
-  manningsEnabled?: boolean
-  manningsCoefficient?: number
-  uplandEnabled?: boolean
-  uplandType?: "paved" | "unpaved" | "other"
-  uplandVelocity?: number
-  kirpichEnabled?: boolean
-  kirpichHeight?: number
-  kirpichHeightAuto?: boolean
-  kirpichHeightAutoValue?: number
-  kirpichChannelType?: KIRPICHCHANNELTYPE
-  airportEnabled?: boolean
-  runoffCoefficient?: number
-  bransbyWilliamsEnabled?: boolean
-}
+import { Catchment } from "../types"
 
 const exportType = ref("Peak")
 

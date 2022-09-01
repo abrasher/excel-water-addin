@@ -1,5 +1,4 @@
-import { ssrContextKey } from "vue"
-import { Catchment } from "../store"
+import { Catchment } from "../types"
 import { airportMethod } from "./airport"
 import { bransbyWilliamMethod } from "./bransbyWilliam"
 import { CalculationResults } from "./interfaces"
