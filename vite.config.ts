@@ -5,10 +5,19 @@ import { readFileSync } from "fs"
 import { resolve } from "path"
 import { homedir } from "os"
 import vueJsx from "@vitejs/plugin-vue-jsx"
+import officeAddin from "vite-plugin-office-addin"
 
 // https://vitejs.dev/config/
 export default defineConfig(({ command, mode }) => {
-  const plugins = [vue(), WindiCSS(), vueJsx()]
+  const plugins = [
+    vue(),
+    WindiCSS(),
+    vueJsx(),
+    officeAddin({
+      devUrl: "https://localhost:3000",
+      prodUrl: "https://victorious-beach-06dd7280f.1.azurestaticapps.net",
+    }),
+  ]
 
   if (mode === "development") {
     return {

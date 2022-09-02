@@ -41,9 +41,9 @@
         <!-- <Runtimes>
           <Runtime resid="Taskpane.Url" lifetime="long" />
         </Runtimes> -->
-        <AllFormFactors>
-          <!-- Define Custom Functions -->
-          <ExtensionPoint xsi:type="CustomFunctions">
+        <!-- <AllFormFactors> 
+        Define Custom Functions
+         <ExtensionPoint xsi:type="CustomFunctions">
             <Script>
               <SourceLocation resid="Functions.Script.Url" />
             </Script>
@@ -54,8 +54,8 @@
               <SourceLocation resid="Functions.Metadata.Url" />
             </Metadata>
             <Namespace resid="Functions.Namespace" />
-          </ExtensionPoint>
-        </AllFormFactors>
+          </ExtensionPoint> 
+        </AllFormFactors> -->
         <DesktopFormFactor>
           <ExtensionPoint xsi:type="PrimaryCommandSurface">
             <OfficeTab id="TabHome">
@@ -104,13 +104,13 @@
       <bt:Urls>
         <bt:Url id="GetStarted.LearnMoreUrl" DefaultValue="https://go.microsoft.com/fwlink/?LinkId=276812" />
         <bt:Url id="Taskpane.Url" DefaultValue="https://localhost:3000/index.html" />
-        <bt:Url id="Functions.Page.Url" DefaultValue="https://localhost:3000/functions/index.html" />
-        <bt:Url id="Functions.Script.Url" DefaultValue="https://localhost:3000/functions/functions.ts" />
-        <bt:Url id="Functions.Metadata.Url" DefaultValue="https://localhost:3000/functions/functions.json" />
+        <!-- <bt:Url id="Functions.Page.Url" DefaultValue="https://localhost:3000/functions/index.html" /> -->
+        <!-- <bt:Url id="Functions.Script.Url" DefaultValue="https://localhost:3000/functions/functions.ts" /> -->
+        <!-- <bt:Url id="Functions.Metadata.Url" DefaultValue="https://localhost:3000/functions/functions.json" /> -->
       </bt:Urls>
       <!-- ShortStrings max characters==125. -->
       <bt:ShortStrings>
-        <bt:String id="Functions.Namespace" DefaultValue="URBAN" />
+        <!-- <bt:String id="Functions.Namespace" DefaultValue="URBAN" /> -->
         <bt:String id="GetStarted.Title" DefaultValue="Get started with Urbantech Add-in" />
         <bt:String id="CommandsGroup.Label" DefaultValue="Urbantech" />
         <bt:String id="TaskpaneButton.Label" DefaultValue="Show Taskpane" />
