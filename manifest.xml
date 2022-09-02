@@ -13,8 +13,8 @@
 
 
   <!-- Icon for your add-in. Used on installation screens and the add-ins dialog. -->
-  <IconUrl DefaultValue="https://localhost:3000/assets/icon-32.png" />
-  <HighResolutionIconUrl DefaultValue="https://localhost:3000/assets/icon-80.png" />
+  <IconUrl DefaultValue="https://localhost:3000/icon-32.png" />
+  <HighResolutionIconUrl DefaultValue="https://localhost:3000/icon-80.png" />
   <SupportUrl DefaultValue="https://www.contoso.com/help" />
   <Hosts>
     <Host Name="Workbook" />
@@ -97,9 +97,9 @@
 
     <Resources>
       <bt:Images>
-        <bt:Image id="Icon.16x16" DefaultValue="https://localhost:3000/assets/logo.png" />
-        <bt:Image id="Icon.32x32" DefaultValue="https://localhost:3000/assets/logo.png" />
-        <bt:Image id="Icon.80x80" DefaultValue="https://localhost:3000/assets/logo.png" />
+        <bt:Image id="Icon.16x16" DefaultValue="https://localhost:3000/logo-16.png" />
+        <bt:Image id="Icon.32x32" DefaultValue="https://localhost:3000/logo-32.png" />
+        <bt:Image id="Icon.80x80" DefaultValue="https://localhost:3000/logo-80.png" />
       </bt:Images>
       <bt:Urls>
         <bt:Url id="GetStarted.LearnMoreUrl" DefaultValue="https://go.microsoft.com/fwlink/?LinkId=276812" />
