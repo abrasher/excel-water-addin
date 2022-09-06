@@ -581,7 +581,7 @@ const renderAsCurrency =
 const currencyColumn = (columnDefs: ResultsColumn) => ({
   ...columnDefs,
   render(row: any) {
-    const value = row[columnDefs.key]
+    const value = get(row, columnDefs.key)
     if (isNaN(value)) {
       return "-"
     }
@@ -592,7 +592,7 @@ const currencyColumn = (columnDefs: ResultsColumn) => ({
 const roundedColumn = (columnDefs: ResultsColumn, decimals = 2) => ({
   ...columnDefs,
   render(row: any) {
-    const value = row[columnDefs.key]
+    const value = get(row, columnDefs.key)
     if (isNaN(value)) {
       return "-"
     }
