@@ -22,10 +22,17 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
+  "exclude": [
+    "node_modues",
+    "dist"
+  ],
   "include": [
     "src/**/*.ts",
     "src/**/*.d.ts",
     "src/**/*.tsx",
     "src/**/*.vue"
+  ],
+  "files": [
+    "docs/.vitepress/config.ts"
   ]
 }
