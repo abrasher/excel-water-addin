@@ -1,6 +1,6 @@
 <template>
   <n-space vertical>
-    <h1 class="text-center text-2xl">Time to Peak Calculator</h1>
+    <h1 class="text-center text-2xl">Pond Calculator</h1>
 
     <n-space>
       <n-button @click="importFromExcel">Import from Excel</n-button>
