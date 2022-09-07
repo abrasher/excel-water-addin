@@ -332,19 +332,19 @@ const catchmentColumns: DataTableColumns<Catchment> = [
         },
       }),
   },
-  {
-    title: "Kirpich",
-    key: "kirpichEnabled",
-    width: 80,
-    className: "aligncenter",
-    render: (row) =>
-      h(NCheckbox, {
-        checked: row.kirpichEnabled,
-        onUpdateChecked: () => {
-          row.kirpichEnabled = !row.kirpichEnabled
-        },
-      }),
-  },
+  // {
+  //   title: "Kirpich",
+  //   key: "kirpichEnabled",
+  //   width: 80,
+  //   className: "aligncenter",
+  //   render: (row) =>
+  //     h(NCheckbox, {
+  //       checked: row.kirpichEnabled,
+  //       onUpdateChecked: () => {
+  //         row.kirpichEnabled = !row.kirpichEnabled
+  //       },
+  //     }),
+  // },
   {
     title: "Upland",
     key: "uplandEnabled",
