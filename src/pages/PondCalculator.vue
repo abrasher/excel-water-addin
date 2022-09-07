@@ -156,7 +156,7 @@
       </n-drawer-content>
     </n-drawer>
 
-    <n-button @click="() => (active = !active)">Select Filters</n-button>
+    <n-button @click="() => (active = !active)">Select Columns</n-button>
 
     <div style="display: flex; flex-direction: column">
       <pre>{{ JSON.stringify(results, null, 2) }}</pre>
@@ -186,7 +186,6 @@ import {
   NTooltip,
   useNotification,
 } from "naive-ui"
-import { InternalRowData } from "naive-ui/es/data-table/src/interface"
 import { computed, h, reactive, ref } from "vue"
 import { getKeyByValue, numberToLetters, pickObjectValues } from "../common/utils"
 import { calculatePond, calculatePondPermanentVolume, storageLerp } from "../functions/ponds"
@@ -353,7 +352,7 @@ const pond = ref<Pond>({
   overrideVolume: false,
   customActiveVolume: 0,
   customPermanentVolume: 0,
-  catchmentArea: 0,
+  catchmentArea: 10,
   imperviousness: 85,
   permanentHeight: 1.1,
   overrideUnitRate: false,
@@ -388,6 +387,17 @@ const currencyFormater = new Intl.NumberFormat("en-CA", {
   maximumSignificantDigits: 4,
 })
 
+const parseThousands = (input: string) => {
+  const nums = input.replace(/(,|\$|\s)/g, "").trim()
+  if (/^\d+(\.(\d+)?)?$/.test(nums)) return Number(nums)
+  return nums === "" ? null : Number.NaN
+}
+
+const formatThousands = (value: number | null) => {
+  if (value === null) return ""
+  return value.toLocaleString("en-US")
+}
+
 // #region Scenarios
 
 interface Scenario {
@@ -409,12 +419,14 @@ const scenarioColumns = reactive<DataTableBaseColumn<Scenario>[]>([
         "onUpdate:value": (value) => (row.landCost = value ?? 0),
         value: row.landCost,
         showButton: false,
+        parse: parseThousands,
+        format: formatThousands,
       })
     },
   },
   {
     key: "usdcDepth",
-    title: "USDC Depth ($/ha)",
+    title: "USDC Depth (m)",
     render(row) {
       return h(NInputNumber, {
         "onUpdate:value": (value) => (row.usdcDepth = value ?? 0),
@@ -435,7 +447,7 @@ const scenarioColumns = reactive<DataTableBaseColumn<Scenario>[]>([
   },
   {
     key: "usdcPermanent",
-    title: "USDC Perm (%)",
+    title: "Perm Handled by USDC  (%)",
     render(row) {
       return h(NInputNumber, {
         "onUpdate:value": (value) => (row.usdcPermanent = value ?? 0),
@@ -446,7 +458,7 @@ const scenarioColumns = reactive<DataTableBaseColumn<Scenario>[]>([
   },
   {
     key: "usdcActive",
-    title: "USDC Active (%)",
+    title: "Active Handled by USDC (%)",
     render(row) {
       return h(NInputNumber, {
         "onUpdate:value": (value) => (row.usdcActive = value ?? 0),
@@ -468,7 +480,7 @@ const scenarioColumns = reactive<DataTableBaseColumn<Scenario>[]>([
   },
   {
     key: "usdcUnitCost",
-    title: "USDC Unit Area Cost ($/m2)",
+    title: "USDC Unit Area Cost ($/m3)",
     render(row) {
       return h(NInputNumber, {
         "onUpdate:value": (value) => (row.usdcUnitCost = value ?? 0),
@@ -539,13 +551,13 @@ const scenarioColumns = reactive<DataTableBaseColumn<Scenario>[]>([
 
 const scenarios = ref<Scenario[]>([
   {
-    landCost: 10,
-    noUSDCPermanent: true,
-    aboveUnitCost: 10,
+    landCost: 1000000,
+    noUSDCPermanent: false,
+    aboveUnitCost: 500,
     usdcDepth: 1.8,
-    usdcUnitCost: 200,
-    usdcPermanent: 20,
-    usdcActive: 90,
+    usdcUnitCost: 2000,
+    usdcPermanent: 0,
+    usdcActive: 50,
   },
 ])
 
@@ -572,12 +584,6 @@ const activeResultsColumns = computed(() => {
   return resultsColumns.filter((col) => col.visible)
 })
 
-const renderAsCurrency =
-  <T extends InternalRowData>(key: keyof T) =>
-  (row: T) => {
-    return h(currencyFormater.format(row[key] as number))
-  }
-
 const currencyColumn = (columnDefs: ResultsColumn) => ({
   ...columnDefs,
   render(row: any) {
@@ -596,43 +602,84 @@ const roundedColumn = (columnDefs: ResultsColumn, decimals = 2) => ({
     if (isNaN(value)) {
       return "-"
     }
-    return h("span", `${(row[columnDefs.key] as number).toFixed(decimals)}`)
+    return h("span", `${(value as number).toFixed(decimals)}`)
   },
 })
+
+const renderTooltip = (trigger: any, content: any) => {
+  return h(NTooltip, null, {
+    trigger: () => trigger,
+    default: () => content,
+  })
+}
 
 const resultsColumns = reactive<ResultsColumn[]>([
   currencyColumn({
     key: "pondStorageCost",
-    title: "Pond Storage Cost ($)",
-    visible: false,
+    title: "Pond Storage Cost",
+    visible: true,
   }),
 
   currencyColumn({
     key: "pondLandCost",
-    title: "Pond Land Cost ($)",
-    visible: false,
+    title(column) {
+      return renderTooltip("Pond Land Cost", "Pond Surface Area (ha) * Land Cost (m/ha)")
+    },
+    visible: true,
   }),
   currencyColumn({
     key: "pondTotalCost",
-    title: "Pond Total Cost ($)",
+    title(column) {
+      return renderTooltip("Pond Total Cost", "Pond Land Cost + Pond Storage Cost")
+    },
     visible: true,
   }),
   currencyColumn({
     key: "tankTotalCost",
-    title: "Tank Total Cost ($)",
+    title: "Tank Storage Cost",
+    visible: true,
+  }),
+
+  currencyColumn({
+    key: "totalCosts",
+    title(column) {
+      return renderTooltip("Total Costs", "Pond Costs + Tank Costs")
+    },
     visible: true,
   }),
   roundedColumn(
     {
       key: "landSaved",
-      title: "Land Saved (ha)",
-      visible: false,
+      title(column) {
+        return renderTooltip("Land Saved (ha)", "(Area if only pond) - (Area of reduced pond)")
+      },
+      visible: true,
     },
     2
   ),
   currencyColumn({
-    key: "landSavedCost",
-    title: "Land Value Saved ($)",
+    key: "landSavings",
+    title: "Land Value Saved",
+    visible: true,
+  }),
+  currencyColumn({
+    key: "pondSavings",
+    title(column) {
+      return renderTooltip(
+        "Pond Storage Savings (ha)",
+        "(Volume if only pond - Volume of reduced pond) * Pond Unit Volume Cost"
+      )
+    },
+    visible: true,
+  }),
+  currencyColumn({
+    key: "totalSavings",
+    title: "Total Savings",
+    visible: true,
+  }),
+  currencyColumn({
+    key: "costDifference",
+    title: "Cost Difference",
     visible: true,
   }),
   roundedColumn(
@@ -645,11 +692,51 @@ const resultsColumns = reactive<ResultsColumn[]>([
   ),
   roundedColumn(
     {
+      key: "tank.permanentVolume",
+      title: "Tank Permanent Volume (m3)",
+      visible: false,
+    },
+    1
+  ),
+  roundedColumn(
+    {
+      key: "tank.activeVolume",
+      title: "Tank Active Volume (m3)",
+      visible: false,
+    },
+    1
+  ),
+  roundedColumn(
+    {
+      key: "tank.totalVolume",
+      title: "Tank Volume (m3)",
+      visible: false,
+    },
+    1
+  ),
+  roundedColumn(
+    {
       key: "tank.area",
       title: "Tank Area (m2)",
       visible: false,
     },
     1
+  ),
+  roundedColumn(
+    {
+      key: "pond.permanent.volume",
+      title: "Pond Permanent Volume (m3)",
+      visible: false,
+    },
+    0
+  ),
+  roundedColumn(
+    {
+      key: "pond.active.volume",
+      title: "Pond Active Volume (m3)",
+      visible: false,
+    },
+    0
   ),
   roundedColumn(
     {
@@ -733,7 +820,7 @@ const calculateScenario = (pondDef: Pond, scenario: Scenario) => {
   // Calculate the parameters for the reduced pond size
   const pond = pondCalculator({
     permanentVolume: ((100 - scenario.usdcPermanent) / 100) * permanentVolume,
-    activeVolume: ((100 - scenario.usdcPermanent) / 100) * activeVolume,
+    activeVolume: ((100 - scenario.usdcActive) / 100) * activeVolume,
     freeboardHeight,
     permanentHeight,
   })
@@ -753,6 +840,9 @@ const calculateScenario = (pondDef: Pond, scenario: Scenario) => {
   }
 
   return {
+    pond,
+    tank,
+    onlyPond,
     landSaved: (onlyPond.top.area - pond.top.area) / 10000,
     pondLandCost: (pond.top.area * scenario.landCost) / 10000,
     pondTotalVolume: pond.permanent.volume + pond.active.volume,
@@ -763,14 +853,28 @@ const calculateScenario = (pondDef: Pond, scenario: Scenario) => {
       return this.pondLandCost + this.pondStorageCost
     },
     get tankTotalCost() {
-      return this.tank.area * scenario.usdcUnitCost
+      return this.tank.totalVolume * scenario.usdcUnitCost
     },
-    get landSavedCost() {
+    get landSavings() {
       return this.landSaved * scenario.landCost
     },
-    pond,
-    tank,
-    onlyPond,
+    get pondSavings() {
+      const volumeDifference =
+        this.onlyPond.active.volume +
+        this.onlyPond.permanent.volume -
+        this.pond.permanent.volume -
+        this.pond.active.volume
+      return volumeDifference * scenario.aboveUnitCost
+    },
+    get totalCosts() {
+      return this.pondTotalCost + this.tankTotalCost
+    },
+    get totalSavings() {
+      return this.landSavings + this.pondSavings
+    },
+    get costDifference() {
+      return this.totalCosts - this.totalSavings
+    },
   }
 }
 
