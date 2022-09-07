@@ -319,19 +319,19 @@ const catchmentColumns: DataTableColumns<Catchment> = [
         },
       }),
   },
-  {
-    title: "SCS",
-    key: "scsEnabled",
-    width: 80,
-    className: "aligncenter",
-    render: (row) =>
-      h(NCheckbox, {
-        checked: row.scsEnabled,
-        onUpdateChecked: () => {
-          row.scsEnabled = !row.scsEnabled
-        },
-      }),
-  },
+  // {
+  //   title: "SCS",
+  //   key: "scsEnabled",
+  //   width: 80,
+  //   className: "aligncenter",
+  //   render: (row) =>
+  //     h(NCheckbox, {
+  //       checked: row.scsEnabled,
+  //       onUpdateChecked: () => {
+  //         row.scsEnabled = !row.scsEnabled
+  //       },
+  //     }),
+  // },
   // {
   //   title: "Kirpich",
   //   key: "kirpichEnabled",
