@@ -2,7 +2,7 @@
 
 Consists of
 
-:::mermaid
+```mermaid
 flowchart TD;
 lw[/Length to Width Ratio/] --> pBW
 pSS[/Permanent Side Slope/] --> pBW
@@ -20,9 +20,9 @@ aTW --> fbTW[Freeboard Top Length Width]
 buffer[\Buffer Distance\] --> tTW
 fbTW --> tTW[Overall Length and Width]
 
-:::
+```
 
-:::mermaid
+```mermaid
 flowchart LR;
 uCV[Use Custom Volumes?] -->|yes| cPV[Custom Volumes]
 uCV -->|no| uUR["Use Custom Unit Rates?"]
@@ -34,7 +34,7 @@ catchment2[\"Catchment Area (ha)"\] --> moe
 moe --> volumes
 cPV --> volumes
 uPV --> volumes[Active and Permanent Volume Used]
-:::
+```
 
 <!-- $$
 V_{truncated} = \frac{1}{6}h(a_{base}+(a+c)(b+d)+a_{top})

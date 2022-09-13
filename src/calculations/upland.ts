@@ -1,3 +1,5 @@
+//https://cspi.ca/wp-content/uploads/2021/04/handbook_chapter03.pdf
+
 type UplandParams = {
   length: number
   type: "paved" | "unpaved" | "other"

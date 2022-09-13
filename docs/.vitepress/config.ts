@@ -1,4 +1,5 @@
 import { defineConfig } from "vitepress"
+import MermaidPlugin from "vitepress-plugin-mermaid"
 
 const customElements = ["mjx-container"]
 
@@ -7,6 +8,7 @@ export default defineConfig({
   markdown: {
     config: (md) => {
       md.use(require("markdown-it-mathjax3"))
+      MermaidPlugin(md)
     },
   },
   vue: {
@@ -22,7 +24,11 @@ export default defineConfig({
         text: "Technical",
         items: [
           {
-            text: "Pond Calculator Equations",
+            text: "Time to Peak / Time of Concentration",
+            link: "/technical/timeToPeak",
+          },
+          {
+            text: "Pond Calculator Flow",
             link: "/technical/pondCalculator",
           },
         ],
