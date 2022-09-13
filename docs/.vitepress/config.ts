@@ -1,4 +1,5 @@
 import { defineConfig } from "vitepress"
+// @ts-ignore ignore error of no typings
 import MermaidPlugin from "vitepress-plugin-mermaid"
 
 const customElements = ["mjx-container"]
