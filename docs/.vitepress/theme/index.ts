@@ -3,7 +3,7 @@ import DefaultTheme from "vitepress/theme"
 
 export default {
   ...DefaultTheme,
-  enhanceApp({ app }) {
+  enhanceApp({ app }: any) {
     // register global components
     app.component("Mermaid", Mermaid)
   },

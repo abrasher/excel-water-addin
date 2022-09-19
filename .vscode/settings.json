@@ -5,6 +5,10 @@
   "editor.linkedEditing": false,
   "editor.scrollbar.scrollByPage": false,
   "volar.icon.preview": false,
-  "volar.completion.autoImportComponent": true
+  "volar.completion.autoImportComponent": false,
+  "javascript.suggest.autoImports": false,
+  "typescript.suggest.autoImports": false,
+  "volar.codeLens.references": false,
+  "volar.diagnostics.delay": 500,
   //"volar.vueserver.useSecondServer": true,
 }

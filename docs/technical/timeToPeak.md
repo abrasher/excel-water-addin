@@ -1,3 +1,10 @@
+---
+lang: en-CA
+title: Time to Peak / Time of Concentration
+description: Technical Documentation for Time to Peak and Time of Concentration
+date: 2022-09-12
+---
+
 # Time of Concentration / Time to Peak
 
 ## Airport Method

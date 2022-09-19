@@ -1,8 +1,8 @@
-import TimeToPeakCalculator from "./pages/TimeToPeakCalculator.vue"
-import PondCalculator from "./pages/PondCalculator.vue"
-import Home from "./pages/Home.vue"
+import { createMemoryHistory, createRouter } from "vue-router"
 
-import { createRouter, createMemoryHistory } from "vue-router"
+const TimeToPeakCalculator = () => import("./pages/TimeToPeakCalculator.vue")
+const Home = () => import("./pages/Home.vue")
+const PondCalculator = () => import("./pages/PondCalculator/PondCalculator.vue")
 
 export const router = createRouter({
   history: createMemoryHistory(),

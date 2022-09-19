@@ -20,16 +20,15 @@
 
 <script setup lang="ts">
 import {
-  NSpace,
+  GlobalThemeOverrides,
+  NConfigProvider,
   NLayout,
   NLayoutContent,
   NLayoutHeader,
-  NConfigProvider,
   NNotificationProvider,
-  GlobalThemeOverrides,
+  NSpace,
 } from "naive-ui"
 import NavHeader from "./components/NavHeader.vue"
-import colors from "windicss/colors"
 
 const themeOverrides: GlobalThemeOverrides = {
   Menu: {
