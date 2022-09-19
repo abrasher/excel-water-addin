@@ -1,11 +1,11 @@
-import { defineConfig } from "vite"
 import vue from "@vitejs/plugin-vue"
-import WindiCSS from "vite-plugin-windicss"
-import { readFileSync } from "fs"
-import { resolve } from "path"
-import { homedir } from "os"
 import vueJsx from "@vitejs/plugin-vue-jsx"
+import { readFileSync } from "fs"
+import { homedir } from "os"
+import { resolve } from "path"
+import { defineConfig } from "vite"
 import officeAddin from "vite-plugin-office-addin"
+import WindiCSS from "vite-plugin-windicss"
 
 // https://vitejs.dev/config/
 export default defineConfig(({ command, mode }) => {
