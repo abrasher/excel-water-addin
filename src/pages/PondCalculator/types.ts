@@ -1,4 +1,4 @@
-export interface Scenario {
+export type Scenario = {
   landCost: number
   usdcDepth: number
   usdcPermanent: number
@@ -24,4 +24,7 @@ export type Pond = {
   freeboardHeight: number
   bufferWidth: number
   lengthToWidth: number
+  plantingWidth: number
+  plantingSlope: number
+  plantingAsStorage: boolean
 }

@@ -65,3 +65,14 @@ export const pickObjectValues = <T extends {}>(obj: T, keys: string[]) =>
 export const getKeyByValue = <T extends Record<string, string>>(obj: T, value: T[keyof T]) => {
   return Object.keys(obj).find((key) => obj[key] === value)
 }
+
+export const parseThousands = (input: string) => {
+  const nums = input.replace(/(,|\$|\s)/g, "").trim()
+  if (/^\d+(\.(\d+)?)?$/.test(nums)) return Number(nums)
+  return nums === "" ? null : Number.NaN
+}
+
+export const formatThousands = (value: number | null) => {
+  if (value === null) return ""
+  return value.toLocaleString("en-US")
+}

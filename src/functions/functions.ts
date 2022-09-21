@@ -1,4 +1,4 @@
-import { calculatePondPermanentVolume } from "./ponds"
+import { calculatePondPermanentVolume } from "../pages/PondCalculator/calculations"
 
 /**
  * Calculate pond volume from MOE estimates
