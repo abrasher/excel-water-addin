@@ -51,6 +51,41 @@ import { Scenario } from "./types"
 
 const sidebar = ref(false)
 
+type ResultsColumn = DataTableBaseColumn<ReturnType<typeof calculateScenario>> & {
+  visible: boolean
+}
+
+// Column Value Formatters
+const roundedColumn = (columnDefs: ResultsColumn, decimals = 2) => ({
+  ...columnDefs,
+  render(row: any) {
+    const value = get(row, columnDefs.key)
+    if (isNaN(value)) {
+      return "-"
+    }
+    return h("span", `${(value as number).toFixed(decimals)}`)
+  },
+})
+
+const renderTooltip = (trigger: any, content: any) => {
+  return h(NTooltip, null, {
+    trigger: () => trigger,
+    default: () => content,
+  })
+}
+
+const currencyColumn = (columnDefs: ResultsColumn) => ({
+  ...columnDefs,
+  render(row: any) {
+    const value = get(row, columnDefs.key)
+    if (isNaN(value)) {
+      return "-"
+    }
+    return `${currencyFormater.format(value as number)}`
+  },
+})
+
+// #region Scenarios
 const scenarios = ref<Scenario[]>([
   {
     landCost: 1000000,
@@ -213,4 +248,6 @@ const scenarioColumns = reactive<DataTableBaseColumn<Scenario>[]>([
     },
   },
 ])
+
+// #endregion Scenarios
 </script>

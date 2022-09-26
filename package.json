@@ -37,6 +37,7 @@
     "custom-functions-metadata": "^1.4.0",
     "eslint": "^8.23.0",
     "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-office-addins": "^2.1.2",
     "eslint-plugin-vue": "^9.4.0",
     "naive-ui": "^2.33.1",
     "office-addin-debugging": "^4.5.0",

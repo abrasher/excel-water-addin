@@ -11,5 +11,9 @@
   "volar.codeLens.references": true,
   "volar.vueserver.useSecondServer": true,
   "volar.diagnostics.delay": 500,
+  "eslint.validate": [
+    "vue",
+    "typescript"
+  ]
   //"volar.vueserver.useSecondServer": true,
 }

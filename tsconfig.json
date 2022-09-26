@@ -34,6 +34,7 @@
   ],
   "files": [
     "docs/.vitepress/config.ts",
-    "docs/.vitepress/theme/index.ts"
+    "docs/.vitepress/theme/index.ts",
+    ".eslintrc.js"
   ]
 }

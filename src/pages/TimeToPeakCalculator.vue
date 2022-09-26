@@ -167,24 +167,23 @@
 
 <script setup lang="ts">
 import { computed, h, ref } from "vue"
-import { kirpichChannelType } from "../calculations"
-import { calculateTpCatchment, calculateTcCatchment } from "../calculations/calculateTp"
+import { calculateTcCatchment, calculateTpCatchment } from "../calculations/calculateTp"
 
 import {
-  NSelect,
-  NText,
-  NInputNumber,
-  NInput,
-  NH3,
-  NFormItem,
-  NSpace,
-  NDataTable,
   DataTableColumns,
-  NTable,
-  NRadioButton,
-  NRadioGroup,
   NButton,
   NCheckbox,
+  NDataTable,
+  NFormItem,
+  NH3,
+  NInput,
+  NInputNumber,
+  NRadioButton,
+  NRadioGroup,
+  NSelect,
+  NSpace,
+  NTable,
+  NText,
 } from "naive-ui"
 import { numberToLetters } from "../common/utils"
 import { Catchment } from "../types"
