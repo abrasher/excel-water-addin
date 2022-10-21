@@ -1,8 +1,31 @@
+import { useNotification } from "naive-ui"
 import { defineStore } from "pinia"
-import { ref } from "vue"
-import { Pond } from "./types"
+import { computed, ref } from "vue"
+import { calculatePondPermanentVolume } from "./calculations"
+import { calculatePond } from "./StackedFrustum"
+import { Pond, Scenario } from "./types"
+
+// const excelLabels = {
+//   overrideVolume: "Override Volume?",
+//   customActiveVolume: "Overridden Active Volume",
+//   customPermanentVolume: "Overriden Permanent Volume",
+//   imperviousness: "Imperviousness",
+//   catchmentArea: "Catchment Area",
+//   overrideUnitRate: "Use Custom Unit Rate?",
+//   permanentUnitRate: "Permanent Storage by Area",
+//   activeUnitRate: "Active Storage by Area",
+//   lengthToWidth: "Length to Width",
+//   permanentSlope: "Permanent Slope",
+//   activeSlope: "Active Slope",
+//   freeboardSlope: "Freeboard Slope",
+//   permanentHeight: "Permanent Height",
+//   freeboardHeight: "Freeboard Height",
+//   bufferWidth: "Buffer Width",
+// }
 
 export const usePondStore = defineStore("pond", () => {
+  const notification = useNotification()
+
   const pond = ref<Pond>({
     overrideVolume: false,
     customActiveVolume: 0,
@@ -24,72 +47,52 @@ export const usePondStore = defineStore("pond", () => {
     plantingAsStorage: true,
   })
 
-  const exportToExcel = () => {
-    Excel.run(async (context) => {
-      context.workbook.worksheets.getItemOrNullObject("Pond Calculator").delete()
-      await context.sync()
+  const result = computed(() => {
+    const {
+      overrideUnitRate,
+      overrideVolume,
+      customPermanentVolume,
+      permanentUnitRate,
+      catchmentArea,
+      imperviousness,
+      customActiveVolume,
+      activeUnitRate,
+    } = pond.value
 
-      const sheet = context.workbook.worksheets.add("Pond Calculator")
+    // Use custom permanent volume if chosen, if not use custom unit rate, if not calculate based on imperviousnes
+    const permanentVolume =
+      (overrideVolume
+        ? customPermanentVolume
+        : overrideUnitRate
+        ? (permanentUnitRate ?? 0) * catchmentArea
+        : calculatePondPermanentVolume(catchmentArea, imperviousness)) ?? 0
 
-      // Export the scenarios table with actions filtered out as it has no value on the row data
-      const scenarioColFiltered = scenarioColumns.filter((col) => col.key !== "actions")
+    // Use custom active volume if chosen, if not use custom unit rate, if not use the standard MOE 40m3/ha
+    const activeVolume =
+      (overrideVolume
+        ? customActiveVolume
+        : overrideUnitRate
+        ? (activeUnitRate ?? 0) * catchmentArea
+        : catchmentArea * 40) ?? 0
 
-      const scenarioTable = sheet.tables.add(
-        `A1:${numberToLetters(scenarioColFiltered.length)}1`,
-        true
-      )
-
-      scenarioTable.name = "PondCalculatorScenarios"
-
-      scenarioTable.getHeaderRowRange().values = [scenarioColFiltered.map((col) => col.title)]
-
-      const scenarioKeys = scenarioColFiltered.map((col) => col.key)
-
-      scenarioTable.rows.add(
-        -1,
-        scenarios.value.map((scenario) => pickObjectValues(scenario, scenarioKeys as string[]))
-      )
-
-      // Export the results table below the scenarios table with 1 cell of spacing
-      const offset1 = scenarios.value.length + 3
-
-      const resultsTable = sheet.tables.add(
-        `A${offset1}:${numberToLetters(resultsColumns.length)}${offset1}`,
-        true
-      )
-
-      resultsTable.name = "PondCalculatorResults"
-
-      resultsTable.getHeaderRowRange().values = [resultsColumns.map((col) => col.title)]
-
-      const resultsKeys = resultsColumns.map((col) => col.key)
-
-      resultsTable.rows.add(
-        -1,
-        results.value.map((result) => pickObjectValues(result, resultsKeys as string[]))
-      )
-
-      // Export the catchment characteristics below the results table
-      const offset2 = scenarios.value.length + results.value.length + 5
-
-      const paramTable = sheet.tables.add(`A${offset2}:B${offset2}`, true)
-
-      paramTable.name = "ParametersTable"
-
-      paramTable.getHeaderRowRange().values = [["Parameter", "Value"]]
-
-      paramTable.rows.add(
-        -1,
-        Object.entries(excelLabels).map(([key, label]) => {
-          return [label, get(pond.value, key)]
-        })
-      )
-
-      sheet.activate()
-
-      await context.sync()
+    return calculatePond({
+      ...pond.value,
+      activeVolume,
+      permanentVolume,
     })
-  }
+  })
 
-  return { pond }
+  const scenarios = ref<Scenario[]>([
+    {
+      landCost: 1000000,
+      noUSDCPermanent: false,
+      aboveUnitCost: 500,
+      usdcDepth: 1.8,
+      usdcUnitCost: 2000,
+      usdcPermanent: 0,
+      usdcActive: 50,
+    },
+  ])
+
+  return { pond, scenarios, result }
 })

@@ -39,7 +39,7 @@ export const storageLerp = (x0: number) => {
   return lerp(y1, y2, alpha)
 }
 
-interface FrustumParameters {
+type FrustumParameters = {
   bottomWidth: number
   bottomLength: number
   sideSlope: number

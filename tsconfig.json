@@ -15,7 +15,7 @@
       "dom"
     ],
     "types": [
-      // "naive-ui/volar",
+      "naive-ui/volar",
       "@types/custom-functions-runtime",
       "@types/office-js"
     ],

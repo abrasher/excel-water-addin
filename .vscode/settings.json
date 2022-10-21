@@ -5,15 +5,14 @@
   "editor.linkedEditing": false,
   "editor.scrollbar.scrollByPage": false,
   "volar.icon.preview": false,
-  "volar.completion.autoImportComponent": true,
-  "javascript.suggest.autoImports": true,
-  "typescript.suggest.autoImports": true,
+  // "volar.completion.autoImportComponent": true,
+  // "javascript.suggest.autoImports": true,
+  // "typescript.suggest.autoImports": true,
   "volar.codeLens.references": true,
   "volar.vueserver.useSecondServer": true,
-  "volar.diagnostics.delay": 500,
+  "volar.diagnostics.delay": 800,
   "eslint.validate": [
     "vue",
     "typescript"
   ]
-  //"volar.vueserver.useSecondServer": true,
 }

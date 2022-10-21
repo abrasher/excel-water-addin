@@ -78,15 +78,15 @@
           path="uplandType"
         >
           <n-select
+            v-model:value="activeCatchment.uplandType"
             style="width: 300px"
             :options="uplandTypeOptions"
-            v-model:value="activeCatchment.uplandType"
           />
         </n-form-item>
         <n-form-item
+          v-if="activeCatchment.uplandType === 'other'"
           label="Velocity (m/s)"
           path="uplandVelocity"
-          v-if="activeCatchment.uplandType === 'other'"
         >
           <n-input-number v-model:value="activeCatchment.uplandVelocity" />
         </n-form-item>
