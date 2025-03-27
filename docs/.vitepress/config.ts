@@ -1,16 +1,13 @@
 import { defineConfig } from "vitepress"
 // @ts-ignore ignore error of no typings
-import MermaidPlugin from "vitepress-plugin-mermaid"
+import { withMermaid } from "vitepress-plugin-mermaid"
 
 const customElements = ["mjx-container"]
 
-export default defineConfig({
+export default withMermaid({
   title: "Water Add-in Documentation",
   markdown: {
-    config: (md) => {
-      md.use(require("markdown-it-mathjax3"))
-      MermaidPlugin(md)
-    },
+    math: true,
   },
   vue: {
     template: {

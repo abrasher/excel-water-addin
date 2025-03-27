@@ -163,7 +163,7 @@ const calculateHeight = ({
         Math.sqrt(
           (-12 * (-c * s - d * s) * c * d * s ** 2 + 2 * (-c * s - d * s) ** 3 + 48 * s ** 4 * v) **
             2 -
-            4 * ((-c * s - d * s) ** 2 - 4 * c * d * s ** 2) ** 3
+            4 * ((-c * s - d * s) ** 2 - 4 * c * d * s ** 2) ** 3,
         )) **
         (1 / 3) *
       s ** -2 +
@@ -174,7 +174,7 @@ const calculateHeight = ({
         Math.sqrt(
           (-12 * (-c * s - d * s) * c * d * s ** 2 + 2 * (-c * s - d * s) ** 3 + 48 * s ** 4 * v) **
             2 -
-            4 * ((-c * s - d * s) ** 2 - 4 * c * d * s ** 2) ** 3
+            4 * ((-c * s - d * s) ** 2 - 4 * c * d * s ** 2) ** 3,
         )) **
         (1 / 3) *
         s ** 2) **
@@ -266,7 +266,7 @@ export const calculatePond = ({
 const calculateLandArea = (
   permanentHeight: number,
   permanentVolume: number,
-  extendedVolume: number
+  extendedVolume: number,
 ) => {
   //if (!permanentVolume && !extendedVolume) return 0
 
@@ -315,12 +315,3 @@ const calculateLandArea = (
     },
   }
 }
-
-// const moe =  calculateLandArea(1.2,1000,400)
-// const devrived = calculatePond({permanentPoolSlope: 4, activePoolSlope: 5, freeboardSlope: 2, bufferWidth: 10, lengthToWidth: 3})({permanentHeight: 1.2, freeboardHeight: 1, activeVolume: 400, permanentVolume: 1000})
-
-// console.log("MOE vs Derived Active Bottom Length")
-// console.log(moe.active.bottomLength, devrived.active.bottomLength)
-
-// console.log("Derived Perm Top vs Active Bottom Area")
-// console.log(devrived.active.bottomWidth, devrived.perm.topWidth)
