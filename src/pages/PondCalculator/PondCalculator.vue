@@ -251,7 +251,7 @@ const importFromExcel = () => {
         const key = getKeyByValue(excelLabels, label)
 
         return [key, value]
-      })
+      }),
     )
 
     scenarios.value = scenarioTable.rows.items.flatMap((row) => {
@@ -275,7 +275,7 @@ const exportToExcel = () => {
 
     const scenarioTable = sheet.tables.add(
       `A1:${numberToLetters(scenarioColFiltered.length)}1`,
-      true
+      true,
     )
 
     scenarioTable.name = "PondCalculatorScenarios"
@@ -286,7 +286,7 @@ const exportToExcel = () => {
 
     scenarioTable.rows.add(
       -1,
-      scenarios.value.map((scenario) => pickObjectValues(scenario, scenarioKeys as string[]))
+      scenarios.value.map((scenario) => pickObjectValues(scenario, scenarioKeys as string[])),
     )
 
     // Export the results table below the scenarios table with 1 cell of spacing
@@ -294,7 +294,7 @@ const exportToExcel = () => {
 
     const resultsTable = sheet.tables.add(
       `A${offset1}:${numberToLetters(resultsColumns.length)}${offset1}`,
-      true
+      true,
     )
 
     resultsTable.name = "PondCalculatorResults"
@@ -305,7 +305,7 @@ const exportToExcel = () => {
 
     resultsTable.rows.add(
       -1,
-      results.value.map((result) => pickObjectValues(result, resultsKeys as string[]))
+      results.value.map((result) => pickObjectValues(result, resultsKeys as string[])),
     )
 
     // Export the catchment characteristics below the results table
@@ -321,7 +321,7 @@ const exportToExcel = () => {
       -1,
       Object.entries(excelLabels).map(([key, label]) => {
         return [label, get(pond.value, key)]
-      })
+      }),
     )
 
     sheet.activate()
@@ -493,58 +493,48 @@ const scenarioColumns = reactive<DataTableBaseColumn<Scenario>[]>([
     key: "actions",
     title: "Actions",
     render(row) {
-      return (
-        <span>
-          <NTooltip>
-            {{
-              default: () => "Duplicate",
-              trigger: () => (
-                <NButton
-                  text
-                  style={{ fontSize: "20px" }}
-                  onClick={() => {
-                    scenarios.value.push({ ...row })
-                  }}
-                >
-                  {{
-                    default: () => (
-                      <NIcon>
-                        {{
-                          default: () => <CopyAdd20Regular />,
-                        }}
-                      </NIcon>
-                    ),
-                  }}
-                </NButton>
-              ),
-            }}
-          </NTooltip>
-          <NTooltip>
-            {{
-              default: () => "Delete",
-              trigger: () => (
-                <NButton
-                  text
-                  style={{ fontSize: "20px" }}
-                  onClick={() => {
-                    scenarios.value = scenarios.value.filter((scenario) => row !== scenario)
-                  }}
-                >
-                  {{
-                    default: () => (
-                      <NIcon>
-                        {{
-                          default: () => <Delete20Regular />,
-                        }}
-                      </NIcon>
-                    ),
-                  }}
-                </NButton>
-              ),
-            }}
-          </NTooltip>
-        </span>
-      )
+      return h("span", [
+        h(NTooltip, null, {
+          default: () => "Duplicate",
+          trigger: () =>
+            h(
+              NButton,
+              {
+                text: true,
+                style: { fontSize: "20px" },
+                onClick: () => {
+                  scenarios.value.push({ ...row })
+                },
+              },
+              {
+                default: () =>
+                  h(NIcon, null, {
+                    default: () => h(CopyAdd20Regular),
+                  }),
+              },
+            ),
+        }),
+        h(NTooltip, null, {
+          default: () => "Delete",
+          trigger: () =>
+            h(
+              NButton,
+              {
+                text: true,
+                style: { fontSize: "20px" },
+                onClick: () => {
+                  scenarios.value = scenarios.value.filter((scenario) => row !== scenario)
+                },
+              },
+              {
+                default: () =>
+                  h(NIcon, null, {
+                    default: () => h(Delete20Regular),
+                  }),
+              },
+            ),
+        }),
+      ])
     },
   },
 ])
@@ -655,7 +645,7 @@ const resultsColumns = reactive<ResultsColumn[]>([
       },
       visible: true,
     },
-    2
+    2,
   ),
   currencyColumn({
     key: "landSavings",
@@ -667,7 +657,7 @@ const resultsColumns = reactive<ResultsColumn[]>([
     title(column) {
       return renderTooltip(
         "Pond Storage Savings (ha)",
-        "(Volume if only pond - Volume of reduced pond) * Pond Unit Volume Cost"
+        "(Volume if only pond - Volume of reduced pond) * Pond Unit Volume Cost",
       )
     },
     visible: true,
@@ -688,7 +678,7 @@ const resultsColumns = reactive<ResultsColumn[]>([
       title: "Pond Area (m2)",
       visible: false,
     },
-    2
+    2,
   ),
   roundedColumn(
     {
@@ -696,7 +686,7 @@ const resultsColumns = reactive<ResultsColumn[]>([
       title: "Tank Permanent Volume (m3)",
       visible: false,
     },
-    1
+    1,
   ),
   roundedColumn(
     {
@@ -704,7 +694,7 @@ const resultsColumns = reactive<ResultsColumn[]>([
       title: "Tank Active Volume (m3)",
       visible: false,
     },
-    1
+    1,
   ),
   roundedColumn(
     {
@@ -712,7 +702,7 @@ const resultsColumns = reactive<ResultsColumn[]>([
       title: "Tank Volume (m3)",
       visible: false,
     },
-    1
+    1,
   ),
   roundedColumn(
     {
@@ -720,7 +710,7 @@ const resultsColumns = reactive<ResultsColumn[]>([
       title: "Tank Area (m2)",
       visible: false,
     },
-    1
+    1,
   ),
   roundedColumn(
     {
@@ -728,7 +718,7 @@ const resultsColumns = reactive<ResultsColumn[]>([
       title: "Pond Permanent Volume (m3)",
       visible: false,
     },
-    0
+    0,
   ),
   roundedColumn(
     {
@@ -736,7 +726,7 @@ const resultsColumns = reactive<ResultsColumn[]>([
       title: "Pond Active Volume (m3)",
       visible: false,
     },
-    0
+    0,
   ),
   roundedColumn(
     {
@@ -744,7 +734,7 @@ const resultsColumns = reactive<ResultsColumn[]>([
       title: "Pond Total Volume (m3)",
       visible: false,
     },
-    0
+    0,
   ),
   roundedColumn(
     {
@@ -752,7 +742,7 @@ const resultsColumns = reactive<ResultsColumn[]>([
       title: "Pond Permanent Height (m)",
       visible: false,
     },
-    2
+    2,
   ),
   roundedColumn(
     {
@@ -760,7 +750,7 @@ const resultsColumns = reactive<ResultsColumn[]>([
       title: "Pond Active Height (m)",
       visible: false,
     },
-    2
+    2,
   ),
 ])
 
@@ -788,16 +778,16 @@ const calculateScenario = (pondDef: Pond, scenario: Scenario) => {
     (overrideVolume
       ? customPermanentVolume
       : overrideUnitRate
-      ? (permanentUnitRate ?? 0) * catchmentArea
-      : calculatePondPermanentVolume(catchmentArea, imperviousness)) ?? 0
+        ? (permanentUnitRate ?? 0) * catchmentArea
+        : calculatePondPermanentVolume(catchmentArea, imperviousness)) ?? 0
 
   // Use custom active volume if chosen, if not use custom unit rate, if not use the standard MOE 40m3/ha
   const activeVolume =
     (overrideVolume
       ? customActiveVolume
       : overrideUnitRate
-      ? (activeUnitRate ?? 0) * catchmentArea
-      : catchmentArea * 40) ?? 0
+        ? (activeUnitRate ?? 0) * catchmentArea
+        : catchmentArea * 40) ?? 0
 
   const pondDimensions = {
     permanentSlope,
