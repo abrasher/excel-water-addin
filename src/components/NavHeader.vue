@@ -3,7 +3,7 @@
     mode="horizontal"
     :options="menuOptions"
     class="w-full text-white"
-    style="background-color: #41b6e6"
+    style="background-color: #1e1e2f"
   />
 </template>
 
